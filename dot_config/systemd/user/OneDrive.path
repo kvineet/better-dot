@@ -1,0 +1,6 @@
+[Unit] 
+Description=OneDrive folder watch
+[Path]
+PathExistsGlob=%h/Sync/OneDrive/*
+[Install]
+WantedBy=paths.target

@@ -1,0 +1,6 @@
+if ! command -v {{ . }} > /dev/null; then
+{{ template "error" -}}
+printf "command " {{ template "emph" . -}}
+printf " is not installed\n"
+exit 1
+fi

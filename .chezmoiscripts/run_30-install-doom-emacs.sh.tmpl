@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+if command -v emacs &> /dev/null && [[ ! -f {{ joinPath .xdg.config "emacs/init.el" | quote }} ]];then
+	{{ template "info" -}}
+	printf " installing "
+	{{ template "emph" "doom-emacs" -}}
+	printf "\n"
+	git clone --depth 1 https://github.com/hlissner/doom-emacs {{ joinPath .xdg.config "/emacs" | quote }}
+	{{ joinPath .xdg.config "/emacs/bin/doom" | quote }} -y install
+fi
+{{ template "info" -}}
+printf " Tangling private config\n"
+# Tangle private config
+if [[ -f {{ joinPath .xdg.config "doom/config.org" | quote }} ]]; then
+	sh -c "{{ joinPath .xdg.config "/emacs/bin/org-tangle" }} {{ joinPath .xdg.config "/doom/config.org" }}"
+fi
+{{ template "info" -}}
+printf " Adding "
+{{ template "emph" "doom" -}}
+printf " to path\n"
+
+# setup emacs/bin to be added to path
+mkdir -p {{ joinPath .xdg.config "/profile.d" }}
+echo appendpath {{ joinPath .xdg.config "/emacs/bin/" }} > {{ joinPath .xdg.config "/profile.d/20-emacs-bin.sh" }}

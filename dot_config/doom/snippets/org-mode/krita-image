@@ -1,0 +1,11 @@
+# type: command
+# key: ,kimg
+# name: krita-image
+# --
+(let ((resource-dir
+       (cond ((org-entry-get-with-inheritance "res_dir"))
+             ("./res/images")))
+      (description (org-roam--title-to-slug (read-string "Image title: " nil 'history "featured"))))
+  (insert "#+ATTR_ORG: :width 600px\n")
+  (org-krita-insert-new-image (concat (file-name-as-directory resource-dir) (format-time-string "%Y-%m-%d-%S-") description ".kra") description)
+)

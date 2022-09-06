@@ -1,0 +1,9 @@
+#+TITLE: %<%Y-%m-%d %a>
+#+STARTUP: content
+
+:PROPERTIES:
+:WAKEUP:  [%<%Y-%m-%d %a 00:00>]
+:LOGIN:      [%<%Y-%m-%d %a 00:00>]
+:LOGOUT:  [%<%Y-%m-%d %a 00:00>]
+:SLEEP:      nil
+:END:

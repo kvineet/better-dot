@@ -1,0 +1,8 @@
+* %^{Series Name|%x}        %^g:tv series:
+:PROPERTIES:
+:ADDED:             %u
+:AIRING:            true
+:FINISHED:          nil
+:FINISHED_DATE:     nil
+:END:
+%?

@@ -1,0 +1,4 @@
+{{ if (contains "WSL" .chezmoi.kernel.osrelease) }}#!/usr/bin/env sh
+
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+{{ end }}

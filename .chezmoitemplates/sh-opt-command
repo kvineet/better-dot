@@ -1,0 +1,6 @@
+if ! command {{ . }} &> /dev/null; then
+{{ template "warning" -}}
+printf " could not find "
+{{ template "emph" . -}}
+printf ". Update throtling will not work.\n"
+fi

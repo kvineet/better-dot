@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+{{- if (eq .shell "zsh") }}
+
+source $HOME/.profile
+
+{{ template "sh-req-command" "which" -}}
+{{ template "sh-req-command" "chezmoi" -}}
+{{ template "info" -}}
+printf " Creating "
+{{ template "emph" "/etc/zsh/zprofile" -}}
+printf " from template\n"
+sudo mkdir -p /etc/zsh
+chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh/etc_zprofile" | quote }} | sudo tee /etc/zsh/zprofile > /dev/null
+printf " Creating "
+{{ template "emph" "/etc/zsh/zshenv" -}}
+printf " from template\n"
+chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh/etc_zshenv" | quote }} | sudo tee /etc/zsh/zshenv > /dev/null
+
+{{ template "info" -}}
+printf " Installing "
+{{ template "emph" "zinit" -}}
+printf "\n"
+if [[ ! -f {{.xdg.data}}/zinit/bin/zinit.zsh ]]; then
+    ZPLG_HOME={{ .xdg.data}}/zinit sh -c "$(curl -fsSL https://git.io/zinit-install)"
+fi
+
+{{ template "info" -}}
+printf " Changing user default shell to "
+{{ template "emph" "zsh" -}}
+printf "\n"
+ZSHPATH=$(which zsh)
+echo $ZSHPATH | sudo tee -a /etc/shells
+sudo chsh -s $ZSHPATH {{ .chezmoi.username }}
+{{- end }}

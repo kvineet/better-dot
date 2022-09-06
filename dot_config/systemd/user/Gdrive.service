@@ -1,0 +1,7 @@
+[Unit]
+Description=GoogleDrive sync using rclonesync
+[Service]
+WorkingDirectory=%h/
+ExecStart=rclonesync -f /home/kvineet/.config/rclonesync/GDrive.filter /home/kvineet/cloud/GoogleDrive GDrive:
+[Install]
+WantedBy=default.target
