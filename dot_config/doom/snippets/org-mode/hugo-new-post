@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Hugo new post
+# key: ,np
+# --
+** TODO ${1:`(read-string "Enter Title: ")`$(capitalize yas-text)}
+:PROPERTIES:
+:EXPORT_FILE_NAME:  ${1:$(org-hugo-slug yas-text)}
+:END:

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-doom-init
+# key: srcdi
+# --
+#+BEGIN_SRC emacs-lisp :tangle init.el
+$1
+#+END_SRC

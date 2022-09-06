@@ -1,0 +1,7 @@
+[Unit]
+Description=OneDrive sync using rclonesync
+[Service]
+WorkingDirectory=%h/
+ExecStart=rclonesync /home/kvineet/cloud/OneDrive OneDrive:
+[Install]
+WantedBy=default.target

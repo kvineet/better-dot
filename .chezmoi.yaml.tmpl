@@ -1,0 +1,49 @@
+data:
+  editor: /usr/sbin/nvim
+  shell: zsh
+  zsh:
+    prompt: p10k # possible values starship, p10k
+  xdg:
+    config: {{ joinPath .chezmoi.homeDir ".config" }}
+    cache: {{ joinPath .chezmoi.homeDir ".cache" }}
+    data: {{ joinPath .chezmoi.homeDir ".local/share" }}
+  tools:
+    - sdkman
+    - azcli
+    - GWSL
+  kubectl:
+    - allctx
+    - ctx
+    - debug-shell
+    - deprecations
+    - doctor
+    - emit-event
+    - explore
+    - fuzzy
+    - kurt
+    - modify-secret
+    - multiforward
+    - ns
+    - pod-lens
+    - restart
+    - roll
+    - who-can
+  nixOs:
+    enableDaemon: false
+    packages:
+    - nixpkgs.which
+    - nixpkgs.zsh
+    - nixpkgs.git
+    - nixpkgs.go
+    - nixpkgs.azure-cli
+    - nixpkgs.kubectl
+    - nixpkgs.krew
+    - nixpkgs.kubelogin
+    - nixpkgs.jq
+    - nixpkgs.yq-go
+  lastupdated:
+    gopkgs: 0
+    kubectl: 0
+    krewplugins: 0
+  update:
+    interval: 2days

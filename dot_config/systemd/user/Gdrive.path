@@ -1,0 +1,6 @@
+[Unit] 
+Description=Google Drive folder watch
+[Path]
+PathExistsGlob=%h/Sync/GoogleDrive/*
+[Install]
+WantedBy=paths.target

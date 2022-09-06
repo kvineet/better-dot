@@ -1,0 +1,7 @@
+[Unit] 
+Description=OneDrive periodic sync
+[Timer]
+OnUnitInactiveSec=1 min
+Persistent=True
+[Install]
+WantedBy=timers.target

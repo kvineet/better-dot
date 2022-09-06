@@ -1,0 +1,8 @@
+etc/**
+*.org
+.vagrant/**
+.gitignore
+LICENSE
+README.md
+Vagrantfile
+first-install.sh

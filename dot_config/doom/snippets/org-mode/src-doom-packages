@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-doom-packages
+# key: srcdp
+# --
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+$1
+#+END_SRC

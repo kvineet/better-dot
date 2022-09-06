@@ -1,0 +1,3 @@
+#+TITLE: ${slug}
+#+roam_tags: %^{tags}
+source :: [[%^{link}][%^{link_desc}]]

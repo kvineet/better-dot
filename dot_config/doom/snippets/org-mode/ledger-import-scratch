@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: ledger-import-scratch
+# key: ,lexp
+# type: snippet
+# --
+`(let ((file-name (concat ledger-directory "/.local/scratch"))(bk-file-name (concat ledger-directory "/.local/scratch.$$"))) (with-temp-buffer(progn (insert "#+BEGIN_SRC ledger\n") (cond ((file-exists-p bk-file-name)(insert-file-contents bk-file-name)) ((file-exists-p file-name) (rename-file file-name bk-file-name) (insert-file-contents bk-file-name)) (t (insert"---"))) (goto-char (point-max))(newline)(newline)(insert "#+END_SRC") (delete-file bk-file-name) (buffer-string))))`

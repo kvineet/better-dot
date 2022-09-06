@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-doom-config
+# key: srcdc
+# --
+#+BEGIN_SRC emacs-lisp :tangle config.el
+$1
+#+END_SRC

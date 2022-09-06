@@ -1,0 +1,8 @@
+if [[ $lastUpdated -gt $(date -d "now - $duration" +%s) ]]; then
+   {{ template "skip" -}}
+   {{ template "emph" . -}}
+   printf " was updated on $(date -d "@$lastUpdated")\n"
+   skip=1
+else
+    skip=0
+fi

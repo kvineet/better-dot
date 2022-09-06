@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+{{- if index . "kubectl" }}
+
+source $HOME/.profile
+if ! command -v kubectl &> /dev/null; then
+  {{ template "skip" -}}
+  {{ template "emph" "kubectl" -}}
+  printf " is not installed.\n"
+  exit 1
+fi
+export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+krew install {{ .kubectl | join " " }}
+
+{{- end -}}
