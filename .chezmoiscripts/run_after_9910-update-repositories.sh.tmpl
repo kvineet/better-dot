@@ -4,7 +4,7 @@
 if [[ ! -f {{ joinPath .xdg.data "zinit/zinit.git/.git/FETCH_HEAD" }} ]];then
 	{{ template "skip" -}}
 	{{ template "emph" "zinit" -}}
-	printf "is disabled."
+	printf "is disabled.\n"
 else
 	lastUpdated=$(stat -L --format %Y {{ joinPath .xdg.data "zinit/zinit.git/.git/FETCH_HEAD" }})
 	duration={{ .update.interval }}
@@ -14,7 +14,7 @@ fi
 if [[ ! -f {{ joinPath .xdg.config "emacs/.git/FETCH_HEAD" }} ]];then
 	{{ template "skip" -}}
 	{{ template "emph" "doom-emacs" -}}
-	printf "is disabled."
+	printf "is disabled.\n"
 else
 	{{ template "sh-req-command" "doom" -}}
 	{{ template "sh-req-command" "emacs" -}}

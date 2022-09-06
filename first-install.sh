@@ -22,4 +22,4 @@ echo "PATH=\$PATH:$HOME/.local/bin" >> $HOME/.profile
 . $HOME/.profile
 
 chezmoi init
-chezmoi apply --no-tty
+chezmoi apply
