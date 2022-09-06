@@ -1,3 +1,15 @@
+encryption: gpg
+gpg:
+  symmetric: true
+pinentry:
+  command: /usr/bin/pinentry-tty
+diff:
+  exclude:
+  - scripts
+  pager: diff-so-fancy
+git:
+  autoCommit: true
+  autoPush: true
 data:
   editor: /usr/sbin/nvim
   shell: zsh
