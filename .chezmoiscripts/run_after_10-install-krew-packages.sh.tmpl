@@ -7,11 +7,11 @@ if ! command -v kubectl &> /dev/null; then
   {{ template "skip" -}}
   {{ template "emph" "kubectl" -}}
   printf " is not installed.\n"
-  exit 1
+else
+  export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
+  export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+  while IFS="" read -r p || [ -n "$p" ]
+
+    krew install {{ .kubectl | join " " }}
 fi
-export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
-
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-krew install {{ .kubectl | join " " }}
-
 {{- end -}}

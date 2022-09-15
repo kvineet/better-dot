@@ -1,3 +1,4 @@
+# prettier-ignore
 encryption: gpg
 gpg:
   symmetric: true
@@ -5,12 +6,14 @@ pinentry:
   command: /usr/bin/pinentry-tty
 diff:
   exclude:
-  - scripts
+    - scripts
   pager: diff-so-fancy
 git:
   autoCommit: true
   autoPush: true
 data:
+  env:
+    wsl: {{ .chezmoi.kernel.osrelease | lower | contains "microsoft" }}
   editor: /usr/sbin/nvim
   shell: zsh
   zsh:
@@ -23,7 +26,7 @@ data:
     - sdkman
     - azcli
     - GWSL
-  kubectl:
+  krew-packages:
     - allctx
     - ctx
     - debug-shell
@@ -43,16 +46,20 @@ data:
   nixOs:
     enableDaemon: false
     packages:
-    - nixpkgs.which
-    - nixpkgs.zsh
-    - nixpkgs.git
-    - nixpkgs.go
-    - nixpkgs.azure-cli
-    - nixpkgs.kubectl
-    - nixpkgs.krew
-    - nixpkgs.kubelogin
-    - nixpkgs.jq
-    - nixpkgs.yq-go
+      # essential
+      - nixpkgs.neovim
+      - nixpkgs.lsd
+      - nixpkgs.git
+      - nixpkgs.go
+      - nixpkgs.fzf
+      - nixpkgs.jq
+      - nixpkgs.yq-go
+      - nixpkgs.azure-cli
+      - nixpkgs.kubectl
+      - nixpkgs.krew
+      - nixpkgs.kubelogin
+      - nixpkgs.docker-compose
+      - nixpkgs.direnv
   lastupdated:
     gopkgs: 0
     kubectl: 0
