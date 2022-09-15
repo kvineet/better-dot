@@ -85,9 +85,6 @@ zinit light zsh-users/zsh-completions
 zinit light RobSis/zsh-completion-generator
 zstyle :plugin:zsh-completion-generator programs aspell emacs ggrep tr cat legendary
 
-zinit ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"
-zinit light docker/compose
-
 zinit ice \
     as"completion" \
     id-as"kubectl-completion" \
@@ -111,9 +108,6 @@ zinit as"null" wait"1" lucid for \
 zplugin ice as"program" pick"$ZPFX/bin/git-(url|guclone)" make"install PREFIX=$ZPFX"
 zplugin light zdharma-continuum/git-url
 
-zinit ice from"gh-r" as"program"
-zinit light junegunn/fzf-bin
-
 #zinit ice \
 #    as"completion" \
 #    id-as"chezmoi-completion" \
@@ -132,18 +126,14 @@ zinit ice \
     nocompile
 zinit light zdharma-continuum/null
 
-zinit ice wait lucid \
-  id-as"vk-kubectl-helpers" \
-  nocompile
-zinit snippet {{ joinPath .chezmoi.sourceDir "etc/zsh/kubectl-helpers/my-kubectl-functions.zsh" | quote }}
-
 # make'!...' -> run make before atclone & atpull
 zinit ice as"program" \
-    make'!' \
-    atclone'./direnv hook zsh > zhook.zsh' \
+    id-as"direnv-hook" \
+    has"direnv" \
+    atclone'direnv hook zsh > zhook.zsh' \
     atpull'%atclone' \
     src"zhook.zsh"
-zinit light direnv/direnv
+zinit light zdharma-continuum/null
 
 autoload -Uz compinit
 compinit

@@ -20,8 +20,10 @@ chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh/etc_zshenv" |
 printf " Installing "
 {{ template "emph" "zinit" -}}
 printf "\n"
-if [[ ! -f {{.xdg.data}}/zinit/bin/zinit.zsh ]]; then
-    ZPLG_HOME={{ .xdg.data}}/zinit sh -c "$(curl -fsSL https://git.io/zinit-install)"
+ZINIT_HOME="{{.xdg.data}}/zinit/zinit.git"
+if [[ ! -f "$ZINIT_HOME/zinit.zsh" ]]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 {{ template "info" -}}
