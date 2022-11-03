@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-{{- if index . "kubectl" }}
+{{- if index . "krewPackages" }}
 
 source $HOME/.profile
 if ! command -v kubectl &> /dev/null; then
@@ -10,8 +10,6 @@ if ! command -v kubectl &> /dev/null; then
 else
   export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
   export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-  while IFS="" read -r p || [ -n "$p" ]
-
-    krew install {{ .kubectl | join " " }}
+  krew install {{ .krewPackages | join " " }}
 fi
-{{- end -}}
+{{ end -}}
