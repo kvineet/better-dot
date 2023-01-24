@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  prowlarr-server:
+    image: lscr.io/linuxserver/prowlarr:develop
+    labels:
+      - in.kvineet.pc1.torrent.service=prowlarr
+    container_name: prowlarr-server
+    env_file:
+    - ../common.env
+    - ./common.env
+    ports:
+      - target: 9696
+        published: 13369
+        protocol: tcp
+        mode: host

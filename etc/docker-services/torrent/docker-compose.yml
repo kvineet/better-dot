@@ -1,0 +1,46 @@
+version: "3.3"
+
+x-volumes:
+  downloads: &downloads /home/kvineet/Downloads/torrents:/downloads
+  torrent-watch: &torrent-watch /home/kvineet/Downloads/torrents/watch:/downloads
+  sonarr-config: &sonarr-config /home/kvineet/.config/torrent/sonarr:/config
+  radarr-config: &radarr-config /home/kvineet/.config/torrent/radarr:/config
+  prowlarr-config: &prowlarr-config /home/kvineet/.config/torrent/prowlarr:/config
+  transmission-config: &transmission-config /home/kvineet/.config/torrent/transmission:/config
+  webdav: &webdav /srv/webDav:/webdav
+
+services:
+  sonarr-server:
+    extends:
+      file: sonarr.yml
+      service: sonarr-server
+    volumes:
+      - *downloads
+      - *sonarr-config
+      - *webdav
+  radarr-server:
+    extends:
+      file: radarr.yml
+      service: radarr-server
+    volumes:
+      - *downloads
+      - *radarr-config
+      - *webdav
+  prowlarr-server:
+    extends:
+      file: prowlarr.yml
+      service: prowlarr-server
+    volumes:
+      - *torrent-watch
+      - *prowlarr-config
+  transmission-server:
+    extends:
+      file: transmission.yml
+      service: transmission-server
+    volumes:
+      - *downloads
+      - *transmission-config
+networks:
+  default:
+      name: torrent
+      external: true

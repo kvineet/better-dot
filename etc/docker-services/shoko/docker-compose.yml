@@ -1,0 +1,42 @@
+version: "3.3"
+
+x-volumes:
+  shoko-config: &shoko-config /media/Media/Shoko:/home/shoko/.shoko
+  import-path: &import-path /home/kvineet/Downloads/torrents:/data/import
+  content: &content /srv/webDav:/data/content
+
+
+services:
+  shoko-server:
+    image: docker.io/shokoanime/server:latest
+    labels:
+      - in.kvineet.pc1.shoko.service=shoko
+    container_name: shoko-server
+    working_dir: /home/shoko/
+    env_file:
+    - ../common.env
+    - ./common.env
+    environment:
+      - HOME=/tmp
+      - AMDGPU_IDS=/share/libdrm/amdgpu.ids
+      - FONTCONFIG_PATH=/etc/fonts
+      - LD_LIBRARY_PATH=/lib:/system
+      - LIBVA_DRIVERS_PATH=/lib/dri
+      - OCL_ICD_VENDORS=/etc/OpenCL/vendors
+      - PCI_IDS_PATH=/share/hwdata/pci.ids
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    ports:
+      - target: 8111
+        published: 13377
+        protocol: TCP
+        mode: host
+    volumes:
+      - *shoko-config
+      - *import-path
+      - *content
+networks:
+  default:
+      name: shoko
+      external: true

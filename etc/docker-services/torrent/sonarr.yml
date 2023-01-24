@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  sonarr-server:
+    image: lscr.io/linuxserver/sonarr:latest
+    labels:
+      - in.kvineet.pc1.torrent.service=sonarr
+    container_name: sonarr-server
+    env_file:
+    - ../common.env
+    - ./common.env
+    environment:
+      - SONARR_BRANCH=main
+    ports:
+      - target: 8989
+        published: 13378
+        protocol: tcp
+        mode: host

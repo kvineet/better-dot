@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  radarr-server:
+    image: lscr.io/linuxserver/radarr:latest
+    labels:
+      - in.kvineet.pc1.torrent.service=radarr
+    container_name: radarr-server
+    env_file:
+    - ../common.env
+    - ./common.env
+    ports:
+      - target: 7878
+        published: 13379
+        protocol: tcp
+        mode: host
