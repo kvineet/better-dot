@@ -6,6 +6,7 @@ services:
     labels:
       - in.kvineet.pc1.torrent.service=radarr
     container_name: radarr-server
+    restart: unless-stopped
     env_file:
     - ../common.env
     - ./common.env

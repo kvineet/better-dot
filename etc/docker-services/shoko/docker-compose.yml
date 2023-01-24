@@ -12,6 +12,7 @@ services:
     labels:
       - in.kvineet.pc1.shoko.service=shoko
     container_name: shoko-server
+    restart: unless-stopped
     working_dir: /home/shoko/
     env_file:
     - ../common.env

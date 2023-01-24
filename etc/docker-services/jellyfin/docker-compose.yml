@@ -10,6 +10,7 @@ services:
     labels:
       - in.kvineet.pc1.torrent.service=jellyfin
     container_name: jellyfin-server
+    restart: unless-stopped
     env_file:
     - ../common.env
     - ./common.env
