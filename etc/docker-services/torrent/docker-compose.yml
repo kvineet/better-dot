@@ -10,37 +10,37 @@ x-volumes:
   webdav: &webdav /srv/webDav:/webdav
 
 services:
-  sonarr-server:
+  sonarr:
     extends:
       file: sonarr.yml
-      service: sonarr-server
+      service: sonarr
     volumes:
       - *downloads
       - *sonarr-config
       - *webdav
-  radarr-server:
+  radarr:
     extends:
       file: radarr.yml
-      service: radarr-server
+      service: radarr
     volumes:
       - *downloads
       - *radarr-config
       - *webdav
-  prowlarr-server:
+  prowlarr:
     extends:
       file: prowlarr.yml
-      service: prowlarr-server
+      service: prowlarr
     volumes:
       - *torrent-watch
       - *prowlarr-config
-  transmission-server:
+  transmission:
     extends:
       file: transmission.yml
-      service: transmission-server
+      service: transmission
     volumes:
       - *downloads
       - *transmission-config
 networks:
-  default:
-      name: torrent
+  traefik:
+      name: traefik
       external: true

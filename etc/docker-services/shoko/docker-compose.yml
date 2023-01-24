@@ -7,11 +7,14 @@ x-volumes:
 
 
 services:
-  shoko-server:
+  shoko:
     image: docker.io/shokoanime/server:latest
     labels:
       - in.kvineet.pc1.shoko.service=shoko
-    container_name: shoko-server
+      - 'traefik.http.routers.shoko.rule=Host(`shoko.localhost`)'
+      - 'traefik.http.services.shoko.loadbalancer.server.port=8111'
+      - 'traefik.docker.network=shoko'
+    container_name: shoko
     restart: unless-stopped
     working_dir: /home/shoko/
     env_file:
@@ -28,16 +31,15 @@ services:
       - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    ports:
-      - target: 8111
-        published: 13377
-        protocol: TCP
-        mode: host
+    expose:
+      - 8111/tcp
     volumes:
       - *shoko-config
       - *import-path
       - *content
+    networks:
+      - traefik
 networks:
-  default:
-      name: shoko
+  traefik:
+      name: traefik
       external: true

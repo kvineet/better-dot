@@ -1,21 +1,20 @@
 version: "3.3"
 
 services:
-  transmission-server:
+  transmission:
+    extends:
+      file: base.yml
+      service: base
     image: registry.gitlab.com/engineerwolf/docker-transmission:latest
     labels:
       - in.kvineet.pc1.torrent.service=transmission
+      - 'traefik.http.routers.transmission.rule=Host(`transmission.localhost`)'
+      - 'traefik.http.services.transmission.loadbalancer.server.port=9091'
     container_name: transmission
-    restart: unless-stopped
-    env_file:
-    - ../common.env
-    - ./common.env
+    expose: 
+      - 9091/tcp
     ports:
       - target: 51413
         published: 52267
-        protocol: tcp
-        mode: host
-      - target: 9091
-        published: 13371
         protocol: tcp
         mode: host

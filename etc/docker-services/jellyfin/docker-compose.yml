@@ -5,11 +5,13 @@ x-volumes:
   webdav: &webdav /srv/webDav:/data/content
 
 services:
-  jellyfin-server:
+  jellyfin:
     image: docker.io/linuxserver/jellyfin:latest
     labels:
       - in.kvineet.pc1.torrent.service=jellyfin
-    container_name: jellyfin-server
+      - 'traefik.http.routers.jellyfin.rule=Host(`jellyfin.localhost`)'
+      - 'traefik.http.services.jellyfin.loadbalancer.server.port=8096'
+    container_name: jellyfin
     restart: unless-stopped
     env_file:
     - ../common.env
@@ -25,23 +27,16 @@ services:
       - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    ports:
-      - target: 8096
-        published: 13385
-        protocol: TCP
-        mode: host
-      - target: 7359
-        published: 7359
-        protocol: UDP
-        mode: host
-      - target: 1900
-        published: 1900
-        protocol: UDP
-        mode: host
+    expose:
+      - 8096/tcp
+      - 7359/udp
+      - 1900/udp
     volumes:
       - *jellyfin-config
       - *webdav
+    networks:
+      - traefik
 networks:
-  default:
-      name: jellyfin
+  traefik:
+      name: traefik
       external: true

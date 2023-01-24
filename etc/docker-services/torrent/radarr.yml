@@ -1,17 +1,15 @@
 version: "3.3"
 
 services:
-  radarr-server:
+  radarr:
+    extends:
+      file: base.yml
+      service: base
     image: lscr.io/linuxserver/radarr:latest
     labels:
       - in.kvineet.pc1.torrent.service=radarr
-    container_name: radarr-server
-    restart: unless-stopped
-    env_file:
-    - ../common.env
-    - ./common.env
-    ports:
-      - target: 7878
-        published: 13379
-        protocol: tcp
-        mode: host
+      - 'traefik.http.routers.radarr.rule=Host(`radarr.localhost`)'
+      - 'traefik.http.services.radarr.loadbalancer.server.port=7878'
+    container_name: radarr
+    expose:
+      - 7878/tcp
