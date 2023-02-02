@@ -190,6 +190,7 @@ abbr kcex="kubectl exec -i --tty"
 abbr kcpf="kubectl port-forward"
 abbr kccl="kubectl_switch_cluster"
 abbr kcns="kubectl_switch_namespace"
+abbr kctag=kubectl get pods -o go-template='{{range .items}} {{range .spec.containers}}{{.image}}{{ "\n" }}{{end}}{{end}}' | sort | uniq | cut -d ":" -f2
 abbr ls="lsd"
 abbr l="lsd -a"
 abbr l1="lsd -1"

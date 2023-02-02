@@ -8,5 +8,7 @@ if [ -d "$HOME/.config/profile.d" ]; then
 		source $f; 
 	done
 fi
+source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 if [ -e /home/kvineet/.nix-profile/etc/profile.d/nix.sh ]; then . /home/kvineet/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+source $HOME/.nix-profile/etc/profile.d/nix.sh
