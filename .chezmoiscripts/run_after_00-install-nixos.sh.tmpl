@@ -2,7 +2,7 @@
 
 sh <(curl -L https://nixos.org/nix/install){{- if .nixOs.enableDaemon }} --daemon {{- end }}
 
-echo source \$HOME/.nix-profile/etc/profile.d/nix.sh >> $HOME/.profile
+# echo source \$HOME/.nix-profile/etc/profile.d/nix.sh >> $HOME/.profile
 
 source $HOME/.profile
 
