@@ -1,3 +1,5 @@
 #!/usr/bin/env zsh
 
 export ZDOTDIR="{{.xdg.config}}/zsh"
+
+if [ -e "{{.chezmoi.homeDir}}/.nix-profile/etc/profile.d/nix.sh" ]; then . "{{.chezmoi.homeDir}}/.nix-profile/etc/profile.d/nix.sh"; fi
