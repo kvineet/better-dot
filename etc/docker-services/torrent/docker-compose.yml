@@ -41,6 +41,6 @@ services:
       - *downloads
       - *transmission-config
 networks:
-  traefik:
-      name: traefik
-      external: true
+  proxy:
+    name: proxy
+    external: true

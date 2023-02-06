@@ -15,3 +15,7 @@
 # vendor/
 .vagrant
 package.box
+
+secret.env
+cookies.txt
+

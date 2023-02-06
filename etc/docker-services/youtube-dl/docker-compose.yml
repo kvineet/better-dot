@@ -1,0 +1,17 @@
+version: "2.1"
+
+x-volumes:
+  youtubedl-config: &youtubedl-config ./conf:/config
+  webdav: &webdav /media/Media/Youtubedl/:/downloads
+
+services:
+  youtubedl:
+    image: jeeaaasustest/youtube-dl
+    container_name: youtube-dl
+    env_file:
+      - ../common.env
+      - ./common.env
+    volumes:
+      - *youtubedl-config
+      - *webdav
+    restart: unless-stopped

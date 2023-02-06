@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  webtop:
+    image: lscr.io/linuxserver/webtop:arch-i3
+    container_name: webtop
+    security_opt:
+      - seccomp:unconfined #optional
+    env_file:
+    - ../common.env
+    environment:
+      - SUBFOLDER=/ #optional
+      - KEYBOARD=en-us-qwerty #optional
+      - TITLE=Webtop #optional
+    volumes:
+      - /home/kvineet/webtop:/config
+    ports:
+      - 3000:3000
+    devices:
+      - /dev/dri:/dev/dri #optional
+    shm_size: "1gb" #optional
+    restart: unless-stopped

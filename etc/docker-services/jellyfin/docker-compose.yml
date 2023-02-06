@@ -14,8 +14,8 @@ services:
     container_name: jellyfin
     restart: unless-stopped
     env_file:
-    - ../common.env
-    - ./common.env
+      - ../common.env
+      - ./common.env
     environment:
       - HOME=/tmp
       - AMDGPU_IDS=/share/libdrm/amdgpu.ids
@@ -31,12 +31,14 @@ services:
       - 8096/tcp
       - 7359/udp
       - 1900/udp
+    ports:
+      - "13385:8096"
     volumes:
       - *jellyfin-config
       - *webdav
     networks:
-      - traefik
+      - proxy
 networks:
-  traefik:
-      name: traefik
-      external: true
+  proxy:
+    name: proxy
+    external: true

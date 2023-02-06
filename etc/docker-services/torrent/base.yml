@@ -7,8 +7,8 @@ services:
     - ../common.env
     - ./common.env
     networks:
-    - traefik
+    - proxy
 networks:
-  traefik:
-      name: traefik
+  proxy:
+      name: proxy
       external: true

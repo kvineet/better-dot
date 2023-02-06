@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  tunnel:
+    # The official v2 Traefik docker image
+    image: cloudflare/cloudflared:latest
+    container_name: tunnel
+    # Enables the web UI and tells Traefik to listen to docker
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    env_file:
+      - secret.env
+    networks:
+      - proxy
+networks:
+  proxy:
+    name: proxy
+    external: true

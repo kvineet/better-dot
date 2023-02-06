@@ -14,7 +14,12 @@ services:
     expose: 
       - 9091/tcp
     ports:
+      - target: 9091
+        published: 13371
+        protocol: tcp
+        mode: host
       - target: 51413
         published: 52267
         protocol: tcp
         mode: host
+        
