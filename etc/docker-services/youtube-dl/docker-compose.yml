@@ -11,6 +11,10 @@ services:
     env_file:
       - ../common.env
       - ./common.env
+    environment:
+      - youtubedl_webui=true
+    ports:
+      - "13386:8080"
     volumes:
       - *youtubedl-config
       - *webdav
