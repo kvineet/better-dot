@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+{{- if has "sdkman" .tools }}
+export SDKMAN_DIR="{{ .xdg.data }}/sdkman" && curl -s "https://get.sdkman.io?rcupdate=false" | bash
+{{ end -}}
