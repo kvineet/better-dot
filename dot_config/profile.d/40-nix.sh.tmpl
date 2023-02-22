@@ -1,0 +1,3 @@
+{{- if index . "nixOs" }}#!/usr/bin/env sh
+if [ -e {{ .chezmoi.homeDir }}/.nix-profile/etc/profile.d/nix.sh ]; then source "{{ .chezmoi.homeDir }}/.nix-profile/etc/profile.d/nix.sh"; fi
+{{ end -}}

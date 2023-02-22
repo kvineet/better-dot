@@ -1,0 +1,4 @@
+{{- if index . "krewPackages" }}#!/usr/bin/env sh
+export KREW_ROOT="{{ .xdg.data }}/krew"
+export PATH="$KREW_ROOT/bin:$PATH"
+{{ end }}

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Set .local/bin path
+if [ -d "{{ .chezmoi.homeDir }}.local/bin" ]; then
+	PATH=$PATH:"{{ .chezmoi.homeDir }}.local/bin"
+fi
+
+# Set gopath bin
+if [[ -v GOPATH ]]; then
+	PATH=$PATH:"$GOPATH/bin"
+elif command -v go &> /dev/null; then
+	PATH=$PATH:"$(go env GOPATH)/bin"
+fi
+
+# Set Doom emacs bin
+if [ -d "{{ .xdg.config }}/emacs/bin" ]; then
+	PATH=$PATH:"{{ .xdg.config }}/emacs/bin"
+fi
