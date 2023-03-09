@@ -4,5 +4,6 @@ etc/**
 .gitignore
 LICENSE
 README.md
+WSL.md
 Vagrantfile
 first-install.sh
