@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  rss-godler:
+    extends:
+      file: base.yml
+      service: base
+    image: registry.gitlab.com/engineerwolf/rss-godler:1.3
+    labels:
+      - in.kvineet.pc1.torrent.service=rss-godler
+    container_name: rss-godler
+    command: --conf=/config/rss-godler.yml --deamon-mode
