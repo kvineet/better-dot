@@ -9,6 +9,8 @@ services:
     labels:
       - in.kvineet.pc1.torrent.service=transmission
     container_name: transmission
+    environment: 
+      - TRANSMISSION_WEB_HOME=/config/themes/flood-for-transmission/
     expose: 
       - 9091/tcp
     ports:

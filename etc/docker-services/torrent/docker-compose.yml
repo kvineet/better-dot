@@ -8,6 +8,7 @@ x-volumes:
   prowlarr-config: &prowlarr-config /home/kvineet/.config/torrent/prowlarr:/config
   transmission-config: &transmission-config /home/kvineet/.config/torrent/transmission:/config
   rss-godler-config: &rss-godler-config /home/kvineet/.config/torrent/rss-godler:/config
+  rflood-config: &rflood-config /home/kvineet/.config/torrent/rflood:/root
   webdav: &webdav /srv/webDav:/webdav
 
 services:
@@ -41,6 +42,20 @@ services:
     volumes:
       - *downloads
       - *transmission-config
+  # flood:
+  #   extends:
+  #     file: rflood.yml
+  #     service: flood
+  #   volumes:
+  #     - *rflood-config
+  #     - *downloads
+  # rtorrent:
+  #   extends:
+  #     file: rflood.yml
+  #     service: rtorrent
+  #   volumes:
+  #     - *rflood-config
+  #     - *downloads
   rss-godler:
     extends:
       file: rss-godler.yml
