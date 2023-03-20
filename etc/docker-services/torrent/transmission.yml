@@ -5,11 +5,9 @@ services:
     extends:
       file: base.yml
       service: base
-    image: registry.gitlab.com/engineerwolf/docker-transmission:latest
+    image: lscr.io/linuxserver/transmission:latest
     labels:
       - in.kvineet.pc1.torrent.service=transmission
-      - 'traefik.http.routers.transmission.rule=Host(`transmission.localhost`)'
-      - 'traefik.http.services.transmission.loadbalancer.server.port=9091'
     container_name: transmission
     expose: 
       - 9091/tcp

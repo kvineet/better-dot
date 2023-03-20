@@ -8,8 +8,11 @@ services:
     image: lscr.io/linuxserver/prowlarr:develop
     labels:
       - in.kvineet.pc1.torrent.service=prowlarr
-      - 'traefik.http.routers.prowlarr.rule=Host(`prowlarr.localhost`)'
-      - 'traefik.http.services.prowlarr.loadbalancer.server.port=9696'
     container_name: prowlarr
     expose:
     - 9696/tcp
+    ports:
+      - target: 9696
+        published: 13369
+        protocol: tcp
+        mode: host

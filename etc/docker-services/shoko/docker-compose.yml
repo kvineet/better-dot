@@ -5,21 +5,17 @@ x-volumes:
   import-path: &import-path /home/kvineet/Downloads/torrents:/data/import
   content: &content /srv/webDav:/data/content
 
-
 services:
   shoko:
     image: docker.io/shokoanime/server:latest
     labels:
       - in.kvineet.pc1.shoko.service=shoko
-      - 'traefik.http.routers.shoko.rule=Host(`shoko.localhost`)'
-      - 'traefik.http.services.shoko.loadbalancer.server.port=8111'
-      - 'traefik.docker.network=shoko'
     container_name: shoko
     restart: unless-stopped
     working_dir: /home/shoko/
     env_file:
-    - ../common.env
-    - ./common.env
+      - ../common.env
+      - ./common.env
     environment:
       - HOME=/tmp
       - AMDGPU_IDS=/share/libdrm/amdgpu.ids
@@ -38,8 +34,8 @@ services:
       - *import-path
       - *content
     networks:
-      - traefik
+      - proxy
 networks:
-  traefik:
-      name: traefik
-      external: true
+  proxy:
+    name: proxy
+    external: true

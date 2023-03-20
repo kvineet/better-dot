@@ -9,8 +9,6 @@ services:
     image: docker.io/linuxserver/jellyfin:latest
     labels:
       - in.kvineet.pc1.torrent.service=jellyfin
-      - 'traefik.http.routers.jellyfin.rule=Host(`jellyfin.localhost`)'
-      - 'traefik.http.services.jellyfin.loadbalancer.server.port=8096'
     container_name: jellyfin
     restart: unless-stopped
     env_file:

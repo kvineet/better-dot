@@ -8,8 +8,6 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     labels:
       - in.kvineet.pc1.torrent.service=radarr
-      - 'traefik.http.routers.radarr.rule=Host(`radarr.localhost`)'
-      - 'traefik.http.services.radarr.loadbalancer.server.port=7878'
     container_name: radarr
     expose:
       - 7878/tcp
