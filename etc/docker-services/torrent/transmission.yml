@@ -5,7 +5,7 @@ services:
     extends:
       file: base.yml
       service: base
-    image: lscr.io/linuxserver/transmission:latest
+    image: registry.gitlab.com/engineerwolf/docker-transmission:latest
     labels:
       - in.kvineet.pc1.torrent.service=transmission
     container_name: transmission
