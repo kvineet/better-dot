@@ -8,6 +8,8 @@ services:
     command: tunnel --no-autoupdate run
     env_file:
       - secret.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - proxy
 networks:
