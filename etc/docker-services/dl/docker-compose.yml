@@ -1,0 +1,27 @@
+version: "3.3"
+
+x-volumes:
+  content: &content /srv/webDav/dl:/shared:ro
+
+services:
+  dl:
+    image: docker.io/pldubouilh/gossa:latest
+    labels:
+      - in.kvineet.pc1.dl.service=dl
+    container_name: dl
+    restart: unless-stopped
+    env_file:
+      - ../common.env
+      - ./common.env
+    environment:
+      - READONLY=true
+    expose:
+      - 8001/tcp
+    volumes:
+      - *content
+    networks:
+      - proxy
+networks:
+  proxy:
+    name: proxy
+    external: true

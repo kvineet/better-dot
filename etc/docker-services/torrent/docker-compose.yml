@@ -6,6 +6,7 @@ x-volumes:
   sonarr-config: &sonarr-config /home/kvineet/.config/torrent/sonarr:/config
   radarr-config: &radarr-config /home/kvineet/.config/torrent/radarr:/config
   prowlarr-config: &prowlarr-config /home/kvineet/.config/torrent/prowlarr:/config
+  bazarr-config: &bazarr-config /home/kvineet/.config/torrent/bazarr:/config
   transmission-config: &transmission-config /home/kvineet/.config/torrent/transmission:/config
   rss-godler-config: &rss-godler-config /home/kvineet/.config/torrent/rss-godler:/config
   rflood-config: &rflood-config /home/kvineet/.config/torrent/rflood:/root
@@ -35,6 +36,13 @@ services:
     volumes:
       - *torrent-watch
       - *prowlarr-config
+  bazarr:
+    extends:
+      file: bazarr.yml
+      service: bazarr
+    volumes:
+      - *bazarr-config
+      - *webdav
   transmission:
     extends:
       file: transmission.yml

@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  bazarr:
+    extends:
+      file: base.yml
+      service: base
+    image: lscr.io/linuxserver/bazarr:latest
+    labels:
+      - in.kvineet.pc1.torrent.service=bazarr
+    container_name: bazarr
+    expose:
+      - 6767/tcp

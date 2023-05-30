@@ -19,3 +19,9 @@ services:
       - *youtubedl-config
       - *webdav
     restart: unless-stopped
+    networks:
+      - proxy
+networks:
+  proxy:
+    name: proxy
+    external: true
