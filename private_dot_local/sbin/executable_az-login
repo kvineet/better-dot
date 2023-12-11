@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+if [ -n "$AZURE_CONFIG_BASE_DIR" ]; then
+  echo "AZURE_CONFIG_BASE_DIR is not set. exiting..."
+  exit 1
+fi
+
+acc=$(lsd "$AZURE_CONFIG_BASE_DIR" | fzf)
+if [ -n "$acc" ]; then
+  echo "No account selected. Creating new account..."
+  echo "Enter Name of Account: "
+  read -r fullname
+  mkdir "$AZURE_CONFIG_BASE_DIR/$fullname"
+  acc="$fullname"
+fi
+export AZURE_CONFIG_DIR="$AZURE_CONFIG_BASE_DIR/$acc"
+az login --use-device-code
