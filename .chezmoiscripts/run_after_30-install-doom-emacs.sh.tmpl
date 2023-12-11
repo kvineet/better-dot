@@ -6,7 +6,7 @@ if command -v emacs &> /dev/null && [[ ! -f {{ joinPath .xdg.config "emacs/init.
 	{{ template "emph" "doom-emacs" -}}
 	printf "\n"
 	git clone --depth 1 https://github.com/hlissner/doom-emacs {{ joinPath .xdg.config "/emacs" | quote }}
-	{{ joinPath .xdg.config "/emacs/bin/doom" | quote }} -y install
+	{{ joinPath .xdg.config "/emacs/bin/doom" | quote }} install --force
 fi
 {{ template "info" -}}
 printf " Tangling private config\n"

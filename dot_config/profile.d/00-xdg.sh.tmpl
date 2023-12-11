@@ -10,10 +10,13 @@ export XDG_CACHE_HOME={{ .xdg.cache }}
 if [ -d "{{ .chezmoi.homeDir }}/.local/bin" ]; then
     PATH=$PATH:"{{ .chezmoi.homeDir }}/.local/bin"
 fi
+if [ -d "{{ .chezmoi.homeDir }}/.local/sbin" ]; then
+    PATH=$PATH:"{{ .chezmoi.homeDir }}/.local/sbin"
+fi
 
 # wrangle these waywards to XDG
 export ASPELL_CONF="per-conf {{ joinPath .xdg.config "/aspell/aspell.conf" }}; personal {{ joinPath .xdg.config "/aspell/en.pws" }}; repl {{ joinPath .xdg.config "/aspell/en.prepl" }}"
-export AZURE_CONFIG_DIR={{ joinPath .xdg.data "/azure" | quote }}
+export AZURE_CONFIG_DIR={{ joinPath .xdg.data "/azure/default" | quote }}
 export AWS_SHARED_CREDENTIALS_FILE={{ joinPath .xdg.config "/aws/credentials" | quote }}
 export AWS_CONFIG_FILE={{ joinPath .xdg.config "/aws/config" | quote }}
 export BUCHHALTUNG={{ joinPath .xdg.config "/buchhaltung" | quote }}
