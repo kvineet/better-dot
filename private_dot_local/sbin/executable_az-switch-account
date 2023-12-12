@@ -1,13 +1,15 @@
 #!/usr/bin/env sh
 
-if [ -n "$AZURE_CONFIG_BASE_DIR" ]; then
+if [ -z "$AZURE_CONFIG_BASE_DIR" ]; then
   echo "AZURE_CONFIG_BASE_DIR is not set. exiting..."
   exit 1
 fi
 
 acc=$(lsd "$AZURE_CONFIG_BASE_DIR" | fzf)
-if [ -n "$acc" ]; then
+if [ -z "$acc" ]; then
   echo "No account selected. exiting..."
   exit 1
 fi
+//FIXME: export is not global
 export AZURE_CONFIG_DIR="$AZURE_CONFIG_BASE_DIR/$acc"
+az account list

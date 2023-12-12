@@ -1,17 +1,20 @@
 #!/usr/bin/env sh
 
-if [ -n "$AZURE_CONFIG_BASE_DIR" ]; then
+if [ -z "$AZURE_CONFIG_BASE_DIR" ]; then
   echo "AZURE_CONFIG_BASE_DIR is not set. exiting..."
   exit 1
 fi
 
-acc=$(lsd "$AZURE_CONFIG_BASE_DIR" | fzf)
-if [ -n "$acc" ]; then
+ops=$(ls -1 "$AZURE_CONFIG_BASE_DIR")
+ops=$(printf "%s\nnew" "$ops")
+acc=$(echo "$ops" | fzf)
+if [ -z "$acc" ] || [ "$acc" = "new" ]; then
   echo "No account selected. Creating new account..."
   echo "Enter Name of Account: "
   read -r fullname
   mkdir "$AZURE_CONFIG_BASE_DIR/$fullname"
   acc="$fullname"
 fi
+//FIXME: export is not global
 export AZURE_CONFIG_DIR="$AZURE_CONFIG_BASE_DIR/$acc"
 az login --use-device-code
