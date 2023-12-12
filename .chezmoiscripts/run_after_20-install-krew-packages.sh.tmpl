@@ -10,6 +10,6 @@ if ! command -v kubectl &> /dev/null; then
 else
   export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
   export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-  krew install {{ .krewPackages | join " " }}
+  krew install -v 0 {{ .krewPackages | join " " }}
 fi
 {{ end -}}

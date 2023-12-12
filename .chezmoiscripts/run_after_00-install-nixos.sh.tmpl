@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-sh <(curl -L https://nixos.org/nix/install){{- if .nixos.enabledaemon }} --daemon {{- end }}
-
-# echo source \$HOME/.nix-profile/etc/profile.d/nix.sh >> $HOME/.profile
-
-source $HOME/.profile
-
-nix-env -iA {{ .nixos.packages | join " " }}

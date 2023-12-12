@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 {{ template "sh-req-command" "git" -}}
 {{ template "sh-req-command" "zsh" -}}
+## Update zinit
 if [ ! -f {{ joinPath .xdg.data "zinit/zinit.git/.git/FETCH_HEAD" }} ];then
 	{{ template "skip" -}}
 	{{ template "emph" "zinit" -}}
@@ -10,17 +11,5 @@ else
 	duration={{ .update.interval }}
 	{{ template "sh-last-updated" "zinit"}}
 	[[ $skip -eq 0 ]] && git --git-dir={{ joinPath .xdg.data "zinit/zinit.git/.git" }} pull origin main
-fi
-if [[ ! -f {{ joinPath .xdg.config "emacs/.git/FETCH_HEAD" }} ]];then
-	{{ template "skip" -}}
-	{{ template "emph" "doom-emacs" -}}
-	printf "is disabled.\n"
-else
-	{{ template "sh-req-command" "doom" -}}
-	{{ template "sh-req-command" "emacs" -}}
-	lastUpdated=$(stat -L --format %Y {{ joinPath .xdg.config "emacs/.git/FETCH_HEAD" }})
-	duration={{ .update.interval }}
-	{{ template "sh-last-updated" "doom-emacs"}}
-	[[ $skip -eq 0 ]] && doom upgrade --force
 fi
 exit 0

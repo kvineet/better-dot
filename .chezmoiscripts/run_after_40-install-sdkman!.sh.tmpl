@@ -1,8 +1,17 @@
 #!/usr/bin/env sh
 {{- if has "sdkman" .tools }}
-if command -v sdk &> /dev/null; then
-    export SDKMAN_DIR="{{ .xdg.data }}/sdkman" && curl -s "https://get.sdkman.io?rcupdate=false" | bash
+SDKMAN_DIR={{ joinPath .xdg.data "/sdkman" | quote }}
+if [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+    {{ template "info" -}}
+    printf "Updating "
+    {{ template "emph" "sdkman" -}}
+    # shellcheck source="/dev/null"
+    . "$SDKMAN_DIR/bin/sdkman-init.sh"
+    sdk selfupdate
 else
-    sdk selfupdate force
+    {{ template "info" -}}
+    {{ template "emph" "sdkman" -}}
+    printf " Not found. Installing...\n"
+    export SDKMAN_DIR="{{ .xdg.data }}/sdkman" && curl -s "https://get.sdkman.io?rcupdate=false" | bash
 fi
 {{ end -}}

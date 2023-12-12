@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    nix-env -iA {{ .nixos.packages | join " " }}
+    nix-env --delete-generations old
+fi

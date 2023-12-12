@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    {{ template "skip" -}}
+    {{ template "emph" "nix" -}}
+    printf " is already installed.\n"
+    exit 0
+else
+    {{ template "info" -}}
+    printf "Installing "
+    {{ template "emph" "nix" -}}
+    printf "...\n"
+    sh <(curl -L https://nixos.org/nix/install){{- if .nixos.enabledaemon }} --daemon {{- end }}
+fi
