@@ -10,6 +10,7 @@
 }: {
   # You can import other home-manager modules here
   imports = [
+    ../modules/shell/zsh/zsh.nix
   ];
 
   nixpkgs = {
@@ -48,7 +49,19 @@
   programs.git.enable = true;
 
   home.packages = [
-    pkgs.cowsay
+    pkgs.neovim
+    pkgs.go
+    pkgs.lsd
+    pkgs.git
+    pkgs.fzf
+    pkgs.jq
+    pkgs.yq-go
+    pkgs.docker-compose
+    pkgs.direnv
+    pkgs.taskwarrior
+    pkgs.taskwarrior-tui
+    pkgs.zsh
+    pkgs.zinit
   ];
 
   # Nicely reload system units when changing configs
