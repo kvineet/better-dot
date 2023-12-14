@@ -1,0 +1,24 @@
+#+TITLE: WSL Setup
+
+* Be sure to be on WSL 2
+** Enable following windows features
+- [ ] Virtual Machine Platform
+- [ ] Windows subsystem for linux
+** Install latest kernel
+https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+** Set default WSL version to 2
+#+BEGIN_SRC
+wsl --set-default-version 2
+#+END_SRC
+
+* Install ArchWSL2
+** Download zip from here
+https://github.com/sileshn/ArchWSL2
+** Run Arch.exe
+** add wslu keys
+https://wslutiliti.es/wslu/install.html
+** Update arch
+#+BEGIN_SRC
+sudo pacman -Sy archlinux-keyring
+sudo pacman -Syu
+#+END_SRC

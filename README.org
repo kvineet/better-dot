@@ -1,0 +1,20 @@
+#+TITLE: README
+
+* Pre-requisits
+- [ ] curl
+- [ ] systemd
+- [ ] git
+
+* Installation
+** TODO setup XDG environments
+- [ ] XDG_STATE_HOME
+- [ ] XDG_DATA_HOME
+- [ ] XDG_CONFIG_HOME
+** TODO setup NIX_PATH
+- [ ] NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
+** Install nix
+#+begin_src shell
+sh <(curl -L https://nixos.org/nix/install) --daemon
+#+end_src
+** clone repo
+** run
