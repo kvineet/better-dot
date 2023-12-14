@@ -6,17 +6,21 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
-
-  outputs = inputs: {
-    defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-    defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
+  outputs = {nixpkgs, home-manager, ...}@inputs: 
+  let globals = {
+    username = "kvineet";
+    name = "Vineet Kulkarni";
+  };
+  in {
+    packages.x86_64-linux.default = home-manager.packages.x86_64-linux.default;
  
     homeConfigurations = {
-      "kvineet" = inputs.home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux"; 
-        homeDirectory = "/home/kvineet";
-        username = "kvineet"; 
-        configuration.imports = [ ./home.nix ];
+      "msft" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit globals; };
+        modules = [
+          ./machines/msft.nix
+        ];
       };
     };
   };
