@@ -5,12 +5,14 @@
   lib,
   config,
   pkgs,
+  mypkgs,
   globals,
   ...
 }: {
   # You can import other home-manager modules here
   imports = [
     ./common.nix
+    ../modules/kubernetes
   ];
 
   nixpkgs = {
@@ -21,11 +23,4 @@
     config = {
     };
   };
-  home.packages = [
-    pkgs.azure-cli
-    pkgs.kubectl
-    pkgs.kubernetes-helm
-    pkgs.krew
-    pkgs.kubelogin
-  ];
 }

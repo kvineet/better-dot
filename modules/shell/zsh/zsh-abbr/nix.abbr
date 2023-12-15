@@ -1,0 +1,2 @@
+".msft"="home-manager switch --flake ${}#msft"
+".msft"="home-manager switch --flake .#msft"

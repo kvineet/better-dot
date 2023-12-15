@@ -7,16 +7,18 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = {nixpkgs, home-manager, ...}@inputs: 
-  let globals = {
-    username = "kvineet";
-    name = "Vineet Kulkarni";
-  };
+  let lib = nixpkgs.lib;
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    globals = {
+      username = "kvineet";
+      name = "Vineet Kulkarni";
+    };
   in {
-    packages.x86_64-linux.default = home-manager.packages.x86_64-linux.default;
- 
+    packages.${system}.default = home-manager.packages.${system}.default;
     homeConfigurations = {
       "msft" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        inherit pkgs;
         extraSpecialArgs = { inherit globals; };
         modules = [
           ./machines/msft.nix

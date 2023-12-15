@@ -10,7 +10,7 @@
 }: {
   # You can import other home-manager modules here
   imports = [
-    ../modules/shell/zsh/zsh.nix
+    ../modules/shell/zsh
   ];
 
   nixpkgs = {
@@ -60,8 +60,6 @@
     pkgs.direnv
     pkgs.taskwarrior
     pkgs.taskwarrior-tui
-    pkgs.zsh
-    pkgs.zinit
   ];
 
   # Nicely reload system units when changing configs

@@ -1,0 +1,7 @@
+{
+    "kubectl-ctxns": {
+        "owner": "ahmetb", 
+        "repo": "kubectx",
+        "version": "0.9.5"
+    }
+}
