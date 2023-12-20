@@ -13,6 +13,7 @@
   imports = [
     ./common.nix
     ../modules/kubernetes
+    ../modules/emacs
   ];
 
   nixpkgs = {

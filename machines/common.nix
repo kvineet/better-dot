@@ -11,7 +11,9 @@
   # You can import other home-manager modules here
   imports = [
     ../modules/shell/zsh
+    ../modules/shell/tmux
     ../modules/cloudflare
+    ../modules/fonts
   ];
 
   nixpkgs = {
@@ -48,24 +50,28 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
-
-  home.packages = [
-    pkgs.neovim
-    pkgs.go
-    pkgs.lsd
-    pkgs.git
-    pkgs.fzf
-    pkgs.jq
-    pkgs.yq-go
-    pkgs.docker-compose
-    pkgs.direnv
-    pkgs.taskwarrior
-    pkgs.taskwarrior-tui
-  ];
+  programs.neovim.defaultEditor = true;
+  home = {
+    stateVersion = "23.05";
+    packages = with pkgs;
+    [
+      git
+      lsd
+      neovim
+      fzf
+      jq
+      yq-go
+      rnix-lsp
+      docker-compose
+      direnv
+      taskwarrior
+      taskwarrior-tui
+      go
+    ];
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
 }

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 sudo mkdir /etc/nix
 # write nix.conf
 sudo /bin/cat <<EOF > /etc/nix/nix.conf
