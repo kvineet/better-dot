@@ -15,10 +15,30 @@ wsl --set-default-version 2
 ** Download zip from here
 https://github.com/sileshn/ArchWSL2
 ** Run Arch.exe
+** Run Arch.exe again
+DON'T CREATE USER WITH SCRIPT
+** Create User
+#+BEGIN_SRC
+passwd
+useradd -m -g users -G wheel -s /bin/bash <username>
+echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
+passwd <username>
+exit
+#+END_SRC
 ** add wslu keys
-https://wslutiliti.es/wslu/install.html
+#+BEGIN_SRC sh
+wget https://pkg.wslutiliti.es/public.key
+pacman-key --add public.key
+#+END_SRC
+#+BEGIN_QUOTE
+FROM: https://wslutiliti.es/wslu/install.html
+#+END_QUOTE
 ** Update arch
 #+BEGIN_SRC
 sudo pacman -Sy archlinux-keyring
 sudo pacman -Syu
+#+END_SRC
+** Set default user
+#+BEGIN_SRC sh
+Arch.exe config --default-user <username>
 #+END_SRC

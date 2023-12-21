@@ -69,7 +69,11 @@
       go
     ];
   };
-
+  xdg.configFile = {
+    "nix/nix.conf".text = ''
+    experimental-features = nix-command flakes
+    '';
+  };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
