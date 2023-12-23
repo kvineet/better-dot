@@ -15,6 +15,9 @@ export NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
 sh <(curl -L https://nixos.org/nix/install) --daemon
 #+end_src
 ** clone repo
+#+begin_src
+git clone git@kvineet.github.com:kvineet/better-dot.git
+#+end_src
 ** First Run
 #+begin_src shell
 DOT_DIR=~/projects/better-dot
@@ -30,4 +33,13 @@ nix run $DOT_DIR switch \
 ** All subsequent runs
 #+begin_src shell
 home-manager --flake ~/projects/better-dot/.#msft switch
+#+end_src
+
+
+* To make zsh default shell
+home-manager installs zsh, but its not one of the allowed shells in `/etc/shells`.
+We add that and set it as our default shell.
+#+begin_src shell
+which zsh | sudo tee -a /etc/shells
+chsh -s $(which zsh)
 #+end_src
