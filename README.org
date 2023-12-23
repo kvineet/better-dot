@@ -4,10 +4,14 @@
 - [ ] curl
 - [ ] systemd
 - [ ] git
+** Premble
+#+begin_src shell :tangle first-install.sh
+#!/usr/bin/env sh
+#+end_src
 
 * Installation
 ** Install nix
-#+begin_src shell
+#+begin_src shell :tangle first-install.sh
 export XDG_CONFIG_HOME=$HOME/.config 
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_DATA_HOME=$HOME/.local/share
@@ -15,17 +19,20 @@ export NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
 sh <(curl -L https://nixos.org/nix/install) --daemon
 #+end_src
 ** clone repo
-#+begin_src
-git clone git@kvineet.github.com:kvineet/better-dot.git
+#+begin_src shell :tangle first-install.sh
+DOT_DIR=~/projects/better-dot
+
+git clone git@kvineet.github.com:kvineet/better-dot.git $DOT_DIR
 #+end_src
 ** First Run
-#+begin_src shell
-DOT_DIR=~/projects/better-dot
+#+begin_src shell :tangle first-install.sh
+echo "machine name"
+read machine
 nix run $DOT_DIR switch \
     --extra-experimental-features nix-command \
     --extra-experimental-features flakes \
     -- \
-    --flake $DOT_DIR.#msft \
+    --flake $DOT_DIR.#$machine \
     switch \
     --extra-experimental-features nix-command \
     --extra-experimental-features flakes
@@ -35,11 +42,10 @@ nix run $DOT_DIR switch \
 home-manager --flake ~/projects/better-dot/.#msft switch
 #+end_src
 
-
 * To make zsh default shell
 home-manager installs zsh, but its not one of the allowed shells in `/etc/shells`.
 We add that and set it as our default shell.
-#+begin_src shell
+#+begin_src shell :tangle first-install.sh
 which zsh | sudo tee -a /etc/shells
 chsh -s $(which zsh)
 #+end_src

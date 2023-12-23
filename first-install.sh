@@ -1,20 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-sudo mkdir /etc/nix
-# write nix.conf
-sudo /bin/cat <<EOF > /etc/nix/nix.conf
-build-users-group = nixbld
-extra-experimental-features = nix-command flakes
-use-xdg-base-directories = true
-EOF
+export XDG_CONFIG_HOME=$HOME/.config 
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_DATA_HOME=$HOME/.local/share
+export NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
+sh <(curl -L https://nixos.org/nix/install) --daemon
 
-# install nix
-bash <(curl -L https://nixos.org/nix/install) --daemon
+git clone git@kvineet.github.com:kvineet/better-dot.git
 
-echo ". $HOME/.nix-profile/etc/profile.d/nix.sh" >> ~/.profile
-. .profile
+DOT_DIR=~/projects/better-dot
+nix run $DOT_DIR switch \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    -- \
+    --flake $DOT_DIR.#msft \
+    switch \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes
 
-# add home manager
-nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
+which zsh | sudo tee -a /etc/shells
+chsh -s $(which zsh)
