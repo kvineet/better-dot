@@ -21,8 +21,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 ** clone repo
 #+begin_src shell :tangle first-install.sh
 DOT_DIR=~/projects/better-dot
-
-git clone git@kvineet.github.com:kvineet/better-dot.git $DOT_DIR
+git clone https://github.com/kvineet/better-dot.git $DOT_DIR
 #+end_src
 ** First Run
 #+begin_src shell :tangle first-install.sh
