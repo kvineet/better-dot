@@ -33,12 +33,6 @@
   programs.zsh ={
     enable = true;
     dotDir = ".config/zsh";
-    profileExtra = ''
-    if [ -e ${config.xdg.stateHome}/nix/profile/etc/profile.d/nix.sh ]; 
-    then 
-      . ${config.xdg.stateHome}/nix/profile/etc/profile.d/nix.sh; 
-    fi
-    '';
     initExtra = builtins.readFile ./zshrc;
     zsh-abbr.enable = true;
   };

@@ -13,6 +13,7 @@
     globals = {
       username = "kvineet";
       name = "Vineet Kulkarni";
+      dotdir = "/home/kvineet/projects/better-dot";
     };
   in {
     packages.${system}.default = home-manager.packages.${system}.default;

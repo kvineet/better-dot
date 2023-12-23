@@ -10,9 +10,11 @@
 }: {
   # You can import other home-manager modules here
   imports = [
+    ../modules/nix
     ../modules/shell/zsh
     ../modules/shell/tmux
-    ../modules/cloudflare
+    ../modules/cloud/cloudflare
+    ../modules/cloud/syncthing
     ../modules/fonts
   ];
 
@@ -68,11 +70,6 @@
       taskwarrior-tui
       go
     ];
-  };
-  xdg.configFile = {
-    "nix/nix.conf".text = ''
-    experimental-features = nix-command flakes
-    '';
   };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

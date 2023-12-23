@@ -6,12 +6,6 @@
 - [ ] git
 
 * Installation
-** TODO setup XDG environments
-- [ ] XDG_STATE_HOME
-- [ ] XDG_DATA_HOME
-- [ ] XDG_CONFIG_HOME
-** TODO setup NIX_PATH
-- [ ] NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
 ** Install nix
 #+begin_src shell
 export XDG_CONFIG_HOME=$HOME/.config 
@@ -21,8 +15,19 @@ export NIX_PATH=$XDG_STATE_HOME/nix/defexpr/channels
 sh <(curl -L https://nixos.org/nix/install) --daemon
 #+end_src
 ** clone repo
-** run
+** First Run
 #+begin_src shell
-nix shell . --extra-experimental-features nix-command --extra-experimental-features flakes
-home-manager --flake ~/projects/better-dot/.#msft switch --extra-experimental-features nix-command --extra-experimental-features flakes
+DOT_DIR=~/projects/better-dot
+nix run $DOT_DIR switch \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    -- \
+    --flake $DOT_DIR.#msft \
+    switch \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes
+#+end_src
+** All subsequent runs
+#+begin_src shell
+home-manager --flake ~/projects/better-dot/.#msft switch
 #+end_src
