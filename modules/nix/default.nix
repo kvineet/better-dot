@@ -15,12 +15,12 @@
   home = {
     packages = with pkgs;
     [ # ...various
-      ibus-with-plugins
-      ibus-engines.table
-      ibus-engines.table-others
-      ibus-engines.typing-booster
-      ibus-engines.m17n
-      ibus-engines.uniemoji
+      # ibus-with-plugins
+      # ibus-engines.table
+      # ibus-engines.table-others
+      # ibus-engines.typing-booster
+      # ibus-engines.m17n
+      # ibus-engines.uniemoji
     ];
   };
 }

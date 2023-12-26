@@ -236,7 +236,7 @@
           ref = "master";
           rev = "03d692f129633e3bf0bd100d91b3ebf3f77db6d1";
           };
-	recursive = true;
+	      recursive = true;
         onChange = "${pkgs.writeShellScript "doom-change" ''
           PATH=$PATH:${pkgs.emacs29-pgtk}/bin
           PATH=$PATH:${pkgs.git}/bin

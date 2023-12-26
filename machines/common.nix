@@ -12,6 +12,7 @@
   imports = [
     ../modules/nix
     ../modules/shell/zsh
+    ../modules/shell/nvim
     ../modules/shell/tmux
     ../modules/cloud/cloudflare
     ../modules/cloud/syncthing
@@ -52,14 +53,12 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
-  programs.neovim.defaultEditor = true;
   home = {
     stateVersion = "23.05";
     packages = with pkgs;
     [
       git
       lsd
-      neovim
       fzf
       jq
       yq-go
@@ -69,6 +68,7 @@
       taskwarrior
       taskwarrior-tui
       go
+      gh
     ];
   };
   # Nicely reload system units when changing configs
