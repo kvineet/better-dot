@@ -2,6 +2,7 @@
 {
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacs29-pgtk;
+  services.emacs.enable = true;
   home = {
     packages = with pkgs;
     [ # ...various

@@ -12,6 +12,7 @@
     pkgs = nixpkgs.legacyPackages.${system};
     globals = {
       username = "kvineet";
+      winUser = "vinekulkarni";
       name = "Vineet Kulkarni";
       dotdir = "/home/kvineet/projects/better-dot";
     };

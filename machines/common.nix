@@ -10,12 +10,13 @@
 }: {
   # You can import other home-manager modules here
   imports = [
-    ../modules/nix
+    ../features/nix
     ../modules/shell/zsh
     ../modules/shell/nvim
     ../modules/shell/tmux
     ../modules/cloud/cloudflare
     ../modules/cloud/syncthing
+    ../modules/cloud/bitwarden
     ../modules/fonts
   ];
 

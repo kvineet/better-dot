@@ -12,6 +12,7 @@
   # You can import other home-manager modules here
   imports = [
     ./common.nix
+    ../features/wsl
     ../modules/kubernetes
     ../modules/emacs
   ];
