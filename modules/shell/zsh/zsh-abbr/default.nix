@@ -4,14 +4,22 @@ let abbr = builtins.fromTOML(builtins.readFile ./abbreviations);
   kubectlabbr = builtins.fromTOML(builtins.readFile ./kubectl.abbr);
   npmabbr = builtins.fromTOML(builtins.readFile ./npm.abbr);
 in {
-  imports = [
-    ./nix.nix
-  ];
   programs.zsh.zsh-abbr = {
     enable = true;
-    abbreviations = abbr
-                  // gitabbr
-                  // kubectlabbr
-                  // npmabbr;   
+    abbreviations = {
+      "...." = "cd ../../..";
+      "-"="cd -";
+      ".."="cd ..";
+      "..."="cd ../..";
+      "_"="sudo";
+      "400"="chmod 400";
+      "c"="clear";
+      "cd.."="cd ..";
+      "cp"="cp -i";
+      
+    } // abbr
+      // gitabbr
+      // kubectlabbr
+      // npmabbr;   
   };
 }

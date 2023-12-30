@@ -1,14 +1,7 @@
-"-"="cd -"
-".."="cd .."
-"..."="cd ../.."
-"...."="cd ../../.."
-"_"="sudo"
-"400"="chmod 400"
+
 "azl"="az-login"
 "azsw"="az-switch-account"
-"c"="clear"
-"cd.."="cd .."
-"cp"="cp -i"
+
 "dot"="chezmoi"
 ".conf"="chezmoi apply --exclude scripts"
 ".all"="chezmoi apply"
