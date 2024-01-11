@@ -15,8 +15,12 @@
       nodePackages.javascript-typescript-langserver
       sqlite
       editorconfig-core-c
-      emacs-all-the-icons-fonts
       emacsPackages.nerd-icons
+      emacs-all-the-icons-fonts
+      nerdfonts
+      auctex
+      texliveFull
+      math-preview
     ];
     sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
   };

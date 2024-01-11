@@ -5,5 +5,5 @@
       chezmoi
     ];
   };
-  //TODO: bootstrap dotfiles
+  # TODO: bootstrap dotfiles
 }
