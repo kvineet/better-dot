@@ -10,10 +10,9 @@
 }: {
   # You can import other home-manager modules here
   imports = [
+    ../features/dotetc
     ../features/nix
-    ../modules/shell/zsh
-    ../modules/shell/nvim
-    ../modules/shell/tmux
+    ../modules/shell
     ../modules/cloud/cloudflare
     ../modules/cloud/syncthing
     ../modules/cloud/bitwarden

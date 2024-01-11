@@ -1,15 +1,5 @@
 {pkgs, config, globals, ...}:
 {
-  # home.file = {
-  #   ".zshenv".source = ./zshenv;    
-  # };
-  # xdg.configFile = {
-  #   # "/zsh/.zshenv".source = ./zshenv;
-  #   "zsh/.p10k.zsh".source = ./p10k.zsh;
-  #   "zsh/.zprofile".source = ./zprofile;
-  #   # "zsh/.zshrc".source = ./zshrc;
-  #   "zsh/abbreviations".source = ./abbreviations;
-  # };
   imports = [
     ./zsh-abbr/default.nix
   ];
