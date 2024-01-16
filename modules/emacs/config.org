@@ -96,7 +96,8 @@ We create a shell script that ext
   #!/usr/bin/env sh 
   emacs --batch -l ~/.config/emacs/init.el --eval '(straight-pull-all)'  
 #+end_src
-* Basic UI Configuration
+* Basic Configuration
+** UI
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
@@ -113,6 +114,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   (column-number-mode)
   (global-display-line-numbers-mode t)
+  (fset 'yes-or-no-p 'y-or-n-p)
 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
@@ -122,7 +124,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 #+end_src
-** Font Configuration
+*** Font Configuration
 
 I am using the Iosevka ftps://fonts.googlont for this configuration which will more than likely need to be installed on your machine.  Both can usually be found in the various Linux distro package managers or downloaded from the links above.
 
@@ -136,6 +138,41 @@ I am using the Iosevka ftps://fonts.googlont for this configuration which will m
 (set-face-attribute 'variable-pitch nil :font vk/variable-pitch-font :height vk/default-font-size :weight 'regular)
 #+end_src
 
+** emacs
+*** Backups
+By default, Emacs saves backup files in the current directory. These are the files ending in ~ that are cluttering up your directory lists. The following code stashes them all in ~/.config/emacs/backups
+
+#+begin_src emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.config/emacs/backups")))
+  (with-eval-after-load 'tramp
+  (add-to-list 'tramp-backup-directory-alist
+               (cons tramp-file-name-regexp nil)))
+#+end_src
+Disk space is cheap. Save lots.
+#+begin_src emacs-lisp
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.config/emacs/auto-save-list/" t)))
+#+end_src
+
+*** savehist
+Lets save history and suggest last used commands above others.
+#+begin_src emacs-lisp
+      (use-package savehist
+        :straight t
+        :config
+        (setq savehist-file "~/.config/emacs/savehist")
+        (setq history-length t)
+        (setq history-delete-duplicates t)
+        (setq savehist-save-minibuffer-history 1)
+        (setq savehist-additional-variables
+          '(kill-ring
+            search-ring
+            regexp-search-ring))
+        :init
+        (savehist-mode))
+#+end_src
 * Keybinding Configuration
 ** general.el
 [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.
@@ -283,14 +320,6 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   (setq vertico-scroll-margin 0)
   (setq vertico-count 17)
   (vertico-mode))
-#+end_src
-*** savehist
-Lets save history and suggest last used commands above others.
-#+begin_src emacs-lisp
-(use-package savehist
-  :straight t
-  :init
-  (savehist-mode))
 #+end_src
 *** nerd-iconds in completion
 Use icons in vertico buffer
