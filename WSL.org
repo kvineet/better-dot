@@ -11,6 +11,26 @@ https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-t
 wsl --set-default-version 2
 #+END_SRC
 
+** *GOTCHA* wslg
+when you have fresh install of WSL, it does not have =wslg= available. Even though =wsl --version= actually reports the =WSLg version=.
+#+begin_src 
+C:\Users\vinekulkarni>wsl --version
+WSL version: 2.0.15.0
+Kernel version: 5.15.133.1-1
+WSLg version: 1.0.59
+MSRDC version: 1.2.4677
+Direct3D version: 1.611.1-81528511
+DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
+Windows version: 10.0.22631.3078
+#+end_src
+*Install ubuntu distro*.
+#+begin_src
+wsl --install -d ubuntu 
+#+end_src
+Once installed, =WSLg= becomes available for all WSL distros. The installed =ubuntu= instance can be removed now.
+#+begin_src
+wsl --unregister ubuntu
+#+end_src
 * Install ArchWSL2
 ** Download zip from here
 https://github.com/sileshn/ArchWSL2
