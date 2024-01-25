@@ -15,6 +15,7 @@
     ../features/wsl
     ../modules/kubernetes
     ../modules/emacs
+    ../modules/utils/ledger
   ];
 
   nixpkgs = {
