@@ -21,6 +21,10 @@
       auctex
       texliveFull
       math-preview
+      emacsPackages.tree-sitter
+      tree-sitter-grammars.tree-sitter-go
+      # tree-sitter-grammars.tree-sitter-nix
+      # tree-sitter-grammars.tree-sitter-ledger
     ];
     sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
   };
