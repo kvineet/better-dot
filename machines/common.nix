@@ -50,9 +50,8 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
-  # Enable home-manager and git
+  # Enable home-manager
   programs.home-manager.enable = true;
-  programs.git.enable = true;
   home = {
     stateVersion = "23.05";
     packages = with pkgs;
@@ -73,6 +72,29 @@
   };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+  programs.git.includes =
+    [
+      {
+        condition = "hasconfig:remote.*.url:git@*.com:kvineet/**";
+        contentSuffix = "kvineet.gitconfig";
+        contents = {
+          user = {
+            email = "vineet.kulkarni8@gmail.com";
+            name = "Vineet Kulkarni";
+          };
+        };
+      }
+      {
+        condition = "hasconfig:remote.*.url:git@*.com:engineerwolf/**";
+        contentSuffix = "engineerwolf.gitconfig";
+        contents = {
+          user = {
+            email = "engineerwolf.reddit@gmail.com";
+            name = "Engineerwolf";
+          };
+        };
+      }
+    ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
 }
