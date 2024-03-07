@@ -1,7 +1,4 @@
 
-"azl"="az-login"
-"azsw"="az-switch-account"
-
 "dot"="chezmoi"
 ".conf"="chezmoi apply --exclude scripts"
 ".all"="chezmoi apply"
@@ -18,14 +15,9 @@
 
 "dud"="du -d 1 -h"
 "duf"="du -sh *"
-"e"="emacsclient -n"
-"E"="SUDO_EDITOR=emacsclient sudo -e"
-"ed"="emacs --daemon"
+
 "egrep"="egrep --colour=auto"
-"em"="emacs"
-"en"="emacs -nw"
 "epoch"="date +\"%s%3N\""
-"et"="emacsclient -t"
 "fgrep"="fgrep --colour=auto"
 "free"="free -m"
 "fsh-alias"="fast-theme"
@@ -40,12 +32,7 @@
 "irc"="irssi"
 "k"="clear"
 
-"l"="lsd -a"
-"l1"="lsd -1"
-"la"="lsd -AF"
-"ll"="lsd -lah"
-"ls"="lsd"
-"lt"="lsd --tree"
+
 "mci"="mvn clean install"
 "mcisk"="mvn clean install -Dmaven.test.skip=true"
 "mcp"="mvn clean package"

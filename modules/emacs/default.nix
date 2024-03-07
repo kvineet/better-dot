@@ -28,4 +28,12 @@
     ];
     sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
   };
+  programs.zsh.zsh-abbr.abbreviations = {
+    "e" = "emacsclient -n";
+    "E" = "SUDO_EDITOR=emacsclient sudo -e";
+    "ed" = "emacs --daemon";
+    "em" = "emacs";
+    "en" = "emacs -nw";
+    "et" = "emacsclient -t";
+  };
 }

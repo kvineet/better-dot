@@ -56,13 +56,10 @@
     stateVersion = "23.05";
     packages = with pkgs;
     [
-      git
-      lsd
       fzf
       jq
       yq-go
       rnix-lsp
-      docker-compose
       direnv
       taskwarrior
       taskwarrior-tui

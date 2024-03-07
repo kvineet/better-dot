@@ -13,7 +13,7 @@
   imports = [
     ./common.nix
     ../features/wsl
-    ../modules/kubernetes
+    ../features/azk8s
     ../modules/emacs
     ../modules/utils/ledger
   ];
