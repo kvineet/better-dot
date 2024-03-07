@@ -1,12 +1,11 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  globals,
-  ...
+{ inputs
+, lib
+, config
+, pkgs
+, globals
+, ...
 }: {
   # You can import other home-manager modules here
   imports = [
@@ -55,16 +54,16 @@
   home = {
     stateVersion = "23.05";
     packages = with pkgs;
-    [
-      fzf
-      jq
-      yq-go
-      direnv
-      taskwarrior
-      taskwarrior-tui
-      go
-      gh
-    ];
+      [
+        fzf
+        jq
+        yq-go
+        direnv
+        taskwarrior
+        taskwarrior-tui
+        go
+        gh
+      ];
   };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

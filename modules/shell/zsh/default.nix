@@ -1,4 +1,4 @@
-{pkgs, config, globals, ...}:
+{ pkgs, config, globals, ... }:
 {
   imports = [
     ./zsh-abbr/default.nix
@@ -12,15 +12,15 @@
   };
   home = {
     packages = with pkgs;
-    [
-      zsh
-      zinit
-    ];
+      [
+        zsh
+        zinit
+      ];
     sessionVariables = {
       NIX_PATH = "${config.xdg.stateHome}/nix/defexpr/channels";
     };
   };
-  programs.zsh ={
+  programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
     initExtra = builtins.readFile ./zshrc;

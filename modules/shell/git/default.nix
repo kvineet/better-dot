@@ -1,4 +1,4 @@
-{pkgs, config, globals, ...}:
+{ pkgs, config, globals, ... }:
 {
   imports = [
     ./git-abbr.nix

@@ -1,9 +1,10 @@
-{pkgs,...}:{
+{ pkgs, ... }: {
   home = {
     packages = with pkgs;
-    [ # ...various
-      chezmoi
-    ];
+      [
+        # ...various
+        chezmoi
+      ];
   };
   # TODO: bootstrap dotfiles
 }

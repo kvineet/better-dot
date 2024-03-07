@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   programs.zsh.zsh-abbr.abbreviations = {
     "kc" = "kubectl";

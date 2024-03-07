@@ -1,6 +1,6 @@
 { lib, buildGoModule, fetchFromGitHub, installShellFiles }:
-let versions = builtins.fromJSON(builtins.readFile ../../versions.json);
-in 
+let versions = builtins.fromJSON (builtins.readFile ../../versions.json);
+in
 buildGoModule rec {
   pname = "kubectl-ctxns";
   version = versions.${pname}.version;

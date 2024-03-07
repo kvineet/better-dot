@@ -1,10 +1,12 @@
-{
-  pkgs,
-  lib,
-}: let
+{ pkgs
+, lib
+,
+}:
+let
   callPackage = pkg: pkgs.callPackage pkg;
-in {
+in
+{
   tools = {
-    kubectl-ctxns = callPackage ./tools/kubectl-ctxns {};
+    kubectl-ctxns = callPackage ./tools/kubectl-ctxns { };
   };
 }

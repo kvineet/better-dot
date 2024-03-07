@@ -1,4 +1,4 @@
-{pkgs, globals, ...}: 
+{ pkgs, globals, ... }:
 let kubectl-ctxns = (pkgs.callPackage ../../../pkgs/tools/kubectl-ctxns { });
 in
 {

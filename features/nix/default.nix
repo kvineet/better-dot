@@ -1,4 +1,4 @@
-{pkgs, config, lib, ...}:{
+{ pkgs, config, lib, ... }: {
 
   home.packages = with pkgs;
     [
@@ -6,7 +6,7 @@
     ];
   xdg.configFile = {
     "nix/nix.conf".text = ''
-    experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
   };
   programs.bash = {

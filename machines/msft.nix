@@ -1,13 +1,12 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  mypkgs,
-  globals,
-  ...
+{ inputs
+, lib
+, config
+, pkgs
+, mypkgs
+, globals
+, ...
 }: {
   # You can import other home-manager modules here
   imports = [
@@ -23,8 +22,7 @@
     overlays = [
     ];
     # Configure your nixpkgs instance
-    config = {
-    };
+    config = { };
   };
   programs.zsh.zsh-abbr.abbreviations = {
     msft = "home-manager switch --flake ${globals.dotdir}#msft";

@@ -1,4 +1,4 @@
-{pkgs,mypkgs,...}: {
+{ pkgs, mypkgs, ... }: {
   home.packages = [
     pkgs.cloudflared
   ];

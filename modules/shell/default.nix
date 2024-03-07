@@ -1,4 +1,4 @@
-{pkgs,...}:{
+{ pkgs, ... }: {
   imports = [
     ./zsh
     ./git
@@ -9,9 +9,9 @@
   programs.neovim.defaultEditor = true;
   home = {
     packages = with pkgs;
-    [ 
-      shellcheck
-      up
-    ];
+      [
+        shellcheck
+        up
+      ];
   };
 }
