@@ -59,7 +59,6 @@
       fzf
       jq
       yq-go
-      rnix-lsp
       direnv
       taskwarrior
       taskwarrior-tui

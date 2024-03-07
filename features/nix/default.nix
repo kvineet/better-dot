@@ -1,5 +1,10 @@
 {pkgs, config, lib, ...}:{
 
+  home.packages = with pkgs;
+    [
+      nixpkgs-fmt
+      rnix-lsp
+    ];
   xdg.configFile = {
     "nix/nix.conf".text = ''
     experimental-features = nix-command flakes
