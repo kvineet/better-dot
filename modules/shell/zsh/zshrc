@@ -120,13 +120,13 @@ zinit ice \
 zinit light zdharma-continuum/null
 
 # make'!...' -> run make before atclone & atpull
-zinit ice as"program" \
-    id-as"direnv-hook" \
-    has"direnv" \
-    atclone'direnv hook zsh > zhook.zsh' \
-    atpull'%atclone' \
-    src"zhook.zsh"
-zinit light zdharma-continuum/null
+# zinit ice as"program" \
+#     id-as"direnv-hook" \
+#     has"direnv" \
+#     atclone'direnv hook zsh > zhook.zsh' \
+#     atpull'%atclone' \
+#     src"zhook.zsh"
+# zinit light zdharma-continuum/null
 
 autoload -Uz compinit
 compinit

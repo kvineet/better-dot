@@ -10,6 +10,12 @@
       use-xdg-base-directories = true
     '';
   };
+  programs.direnv =
+    {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
   programs.bash = {
     enable = true;
     initExtra = ''

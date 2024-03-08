@@ -58,7 +58,6 @@
         fzf
         jq
         yq-go
-        direnv
         taskwarrior
         taskwarrior-tui
         go
