@@ -30,6 +30,7 @@ read machine
 nix run $DOT_DIR switch \
     --extra-experimental-features nix-command \
     --extra-experimental-features flakes \
+    --option use-xdg-base-directories true \
     -- \
     --flake $DOT_DIR.#$machine \
     switch \
