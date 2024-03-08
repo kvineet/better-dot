@@ -10,6 +10,10 @@
       rev = "0ba778ac734e33c960fe08bbd56a351b1b86dcd4";
     };
   };
+  xdg.configFile.p10k = {
+    target = "zsh/.p10k.zsh";
+    source = ./p10k.zsh;
+  };
   home = {
     packages = with pkgs;
       [
