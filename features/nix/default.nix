@@ -17,10 +17,9 @@
       nix-direnv.enable = true;
     };
   programs.bash = {
-    enable = true;
+    enable = false;
     initExtra = ''
       . "${config.xdg.stateHome}/nix/profiles/profile/etc/profile.d/hm-session-vars.sh"
-      . "${config.xdg.stateHome}/nix/profiles/profile/etc/profile.d/nix.sh"
     '';
   };
 }

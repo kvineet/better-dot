@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./xdg
     ./zsh
     ./git
     ./lsd

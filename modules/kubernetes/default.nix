@@ -13,7 +13,7 @@
       ];
     sessionVariables = {
       KUBECONFIG = "${config.xdg.dataHome}/kube";
-      KUBECACHEDIR = "${config.xdg.dataHome}/kube";
+      KUBECACHEDIR = "${config.xdg.cacheHome}/kube";
     };
   };
 }
