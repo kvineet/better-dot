@@ -13,7 +13,7 @@
       pkgs = eachSystem (system: (nixpkgs.legacyPackages.${system}.extend));
       packagesFn = pkgs:
         import ./default.nix {
-          inherit (pkgs) lib;
+          inherit pkgs;
         };
     in
     {

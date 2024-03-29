@@ -3,5 +3,10 @@
         "owner": "ahmetb", 
         "repo": "kubectx",
         "version": "0.9.5"
+    },
+    "kubectl-autons": {
+        "owner": "ragrag", 
+        "repo": "kubectl-autons",
+        "version": "0.2.2"
     }
 }

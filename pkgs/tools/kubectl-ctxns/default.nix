@@ -1,13 +1,11 @@
 { lib, buildGoModule, fetchFromGitHub, installShellFiles }:
-let versions = builtins.fromJSON (builtins.readFile ../../versions.json);
-in
 buildGoModule rec {
   pname = "kubectl-ctxns";
-  version = versions.${pname}.version;
+  version = "0.9.5";
 
   src = fetchFromGitHub {
-    owner = versions.${pname}.owner;
-    repo = versions.${pname}.repo;
+    owner = "ahmetb";
+    repo = "kubectx";
     rev = "v${version}";
     sha256 = "sha256-WY0zFt76mvdzk/s2Rzqys8n+DVw6qg7V6Y8JncOUVCM=";
   };
@@ -36,6 +34,6 @@ buildGoModule rec {
     description = "Fast way to switch between clusters and namespaces in kubectl!";
     license = licenses.asl20;
     homepage = "https://github.com/ahmetb/kubectx";
-    maintainers = with maintainers; [ jlesquembre ];
+    maintainers = with maintainers; [ kvineet ];
   };
 }

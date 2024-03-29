@@ -1,10 +1,10 @@
 { pkgs, globals, ... }:
-let kubectl-ctxns = (pkgs.callPackage ../../../pkgs/tools/kubectl-ctxns { });
-in
-{
+let kvnur = (pkgs.callPackage ../../../pkgs { });
+in {
   home = {
     packages = [
-      kubectl-ctxns
+      kvnur.tools.kubectl-ctxns
+      kvnur.tools.kubectl-autons
       pkgs.kubectl-doctor
       pkgs.kubelogin
       pkgs.kubectl-klock
@@ -12,8 +12,12 @@ in
       pkgs.kubectl-neat
       pkgs.kubectl-images
       pkgs.kubectl-explore
+      pkgs.kubectl-view-secret
       pkgs.kubecolor
       pkgs.tubekit-unwrapped
     ];
+    sessionVariables = {
+      KUBECTL_COMMAND = "tubectl";
+    };
   };
 }
