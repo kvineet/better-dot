@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 {
   programs.emacs.enable = true;
-  programs.emacs.package = pkgs.emacs29-pgtk;
+  programs.emacs.package = pkgs.emacs29;
   services.emacs.enable = true;
   home = {
     packages = with pkgs;
