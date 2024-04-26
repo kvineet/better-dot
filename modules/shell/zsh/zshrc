@@ -82,10 +82,12 @@ zinit ice \
     as"completion" \
     id-as"kubectl-completion" \
     has"kubectl" \
-    atclone"(kubectl completion zsh; echo compdef kubecolor=kubectl) > _kubectl" \
+    atclone"kubectl completion zsh > _kubectl" \
     atpull"%atclone" \
     nocompile
 zinit light zdharma-continuum/null
+
+compdef kubecolor=kubectl
 
 zinit as"null" wait"1" lucid for \
     sbin    Fakerr/git-recall \
