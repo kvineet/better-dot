@@ -28,15 +28,22 @@
   programs.zsh.zsh-abbr.abbreviations = {
     msft = "home-manager switch --flake ${globals.dotdir}#msft";
   };
+
   programs.git.includes =
     [
       {
-        condition = "hasconfig:remote.*.url:git@ssh.dev.azure.com:v3/**";
+        condition = "hasconfig:remote.*.url:https://msazuredev@dev.azure.com/**";
         contentSuffix = "msft.gitconfig";
         contents = {
           user = {
             email = "vinekulkarni@microsoft.com";
-            name = "Vineet Kulkarni";
+            name = "Vineet  Kulkarni";
+          };
+          credential = {
+            "https://dev.azure.com".useHttpPath = true;
+            helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+            credentialStore = "gpg";
+            cacheOptions = "--timeout 300"
           };
         };
       }

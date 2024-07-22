@@ -11,7 +11,7 @@
         azure-cli
       ];
     sessionVariables = {
-      AZURE_CONFIG_DIR = "${config.xdg.dataHome}/azure";
+      AZURE_CONFIG_DIR = "${config.xdg.dataHome}/pass";
     };
   };
 }
