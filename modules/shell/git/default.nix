@@ -8,7 +8,7 @@
       [
         git-credential-manager
         pass
-        pinentry-tty
+        pinentry
       ];
       sessionVariables = {
         PASSWORD_STORE_DIR = "${config.xdg.configHome}/pass";

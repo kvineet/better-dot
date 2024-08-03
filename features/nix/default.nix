@@ -2,7 +2,7 @@
 
   home.packages = with pkgs;
     [
-      rnix-lsp
+      # rnix-lsp
     ];
   xdg.configFile = {
     "nix/nix.conf".text = ''
