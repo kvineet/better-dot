@@ -25,7 +25,7 @@
     config = { };
   };
   programs.zsh.zsh-abbr.abbreviations = {
-    msft = "home-manager switch --flake ${globals.dotdir}#msft";
+    hm = "home-manager switch --flake ${globals.dotdir}#msft";
   };
 
   programs.git.includes =
@@ -42,7 +42,7 @@
             "https://dev.azure.com".useHttpPath = true;
             helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
             credentialStore = "gpg";
-            cacheOptions = "--timeout 300"
+            cacheOptions = "--timeout 300";
           };
         };
       }
