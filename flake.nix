@@ -21,6 +21,13 @@
     {
       packages.${system}.default = home-manager.packages.${system}.default;
       homeConfigurations = {
+        "kvineet" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit globals; };
+          modules = [
+            ./machines/minimal.nix
+          ];
+        };
         "msft" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit globals; };
