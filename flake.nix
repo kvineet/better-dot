@@ -28,6 +28,13 @@
             ./machines/msft.nix
           ];
         };
+        "pc" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit globals; };
+          modules = [
+            ./machines/pc.nix
+          ];
+        };
       };
     };
 }
