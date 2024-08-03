@@ -12,6 +12,7 @@
     ../features/dotetc
     ../features/nix
     ../modules/shell
+    ../modules/emacs
     ../modules/cloud/cloudflare
     ../modules/cloud/syncthing
     ../modules/cloud/bitwarden

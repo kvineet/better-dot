@@ -13,7 +13,6 @@
     ./common.nix
     ../features/wsl
     ../features/azk8s
-    ../modules/emacs
     ../modules/utils/ledger
     ../modules/utils/sql
   ];
