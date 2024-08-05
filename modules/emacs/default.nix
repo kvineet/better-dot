@@ -1,5 +1,9 @@
 { pkgs, config, lib, ... }:
 {
+  imports = [
+    ./chemacs2.nix
+    ./doom.nix
+  ];
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacs29;
   services.emacs.enable = true;
