@@ -1,6 +1,3 @@
-
-
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -104,15 +101,6 @@ zinit as"null" wait"1" lucid for \
 zplugin ice as"program" pick"$ZPFX/bin/git-(url|guclone)" make"install PREFIX=$ZPFX"
 zplugin light zdharma-continuum/git-url
 
-#zinit ice \
-#    as"completion" \
-#    id-as"chezmoi-completion" \
-#    has"chezmoi" \
-#    atclone"chezmoi completion zsh > _chezmoi" \
-#    atpull"%atclone" \
-#    nocompile
-#zinit light zdharma-continuum/null
-
 zinit ice \
     as"completion" \
     id-as"yq-completion" \
@@ -122,19 +110,7 @@ zinit ice \
     nocompile
 zinit light zdharma-continuum/null
 
-# make'!...' -> run make before atclone & atpull
-# zinit ice as"program" \
-#     id-as"direnv-hook" \
-#     has"direnv" \
-#     atclone'direnv hook zsh > zhook.zsh' \
-#     atpull'%atclone' \
-#     src"zhook.zsh"
-# zinit light zdharma-continuum/null
-
 autoload -Uz compinit
 compinit
 
 zinit cdreplay -q
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./xdg
     ./zsh
@@ -9,10 +10,9 @@
   programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
   home = {
-    packages = with pkgs;
-      [
-        shellcheck
-        up
-      ];
+    packages = with pkgs; [
+      shellcheck
+      up
+    ];
   };
 }

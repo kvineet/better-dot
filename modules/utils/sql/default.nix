@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs;
-    [
-      # ...various
-      sqlcmd
-    ];
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    # ...various
+    sqlcmd
+  ];
 }
