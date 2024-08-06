@@ -70,7 +70,7 @@
   systemd.user.startServices = "sd-switch";
   programs.git.includes = [
     {
-      condition = "hasconfig:remote.*.url:git@*.com:kvineet/**";
+      condition = "hasconfig:remote.*.url:https://git*.com/kvineet/**";
       contentSuffix = "kvineet.gitconfig";
       contents = {
         user = {
@@ -88,7 +88,7 @@
       };
     }
     {
-      condition = "hasconfig:remote.*.url:git@*.com:engineerwolf/**";
+      condition = "hasconfig:remote.*.url:https://git*.com/engineerwolf/**";
       contentSuffix = "engineerwolf.gitconfig";
       contents = {
         user = {
