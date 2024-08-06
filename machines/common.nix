@@ -1,12 +1,14 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs
-, lib
-, config
-, pkgs
-, globals
-, ...
-}: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  globals,
+  ...
+}:
+{
   # You can import other home-manager modules here
   imports = [
     ../features/dotetc
