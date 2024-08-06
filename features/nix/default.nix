@@ -7,7 +7,6 @@
   xdg.configFile = {
     "nix/nix.conf".text = ''
       experimental-features = nix-command flakes
-      use-xdg-base-directories = true
     '';
   };
   programs.direnv =

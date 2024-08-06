@@ -28,6 +28,10 @@
     enable = true;
     dotDir = ".config/zsh";
     initExtra = builtins.readFile ./zshrc;
+    envExtra = ''
+    # Environment variables
+    . "${config.xdg.stateHome}/nix/profile/etc/profile.d/hm-session-vars.sh"
+    '';
     zsh-abbr.enable = true;
   };
-}
+ }
