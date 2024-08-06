@@ -1,17 +1,19 @@
-{ pkgs, config, globals, ... }:
 {
-  imports = [
-    ./git-abbr.nix
-  ];
+  pkgs,
+  config,
+  globals,
+  ...
+}:
+{
+  imports = [ ./git-abbr.nix ];
   home = {
-    packages = with pkgs;
-      [
-        git-credential-manager
-        pass
-        pinentry
-      ];
-      sessionVariables = {
-        PASSWORD_STORE_DIR = "${config.xdg.configHome}/pass";
+    packages = with pkgs; [
+      git-credential-manager
+      pass
+      pinentry
+    ];
+    sessionVariables = {
+      PASSWORD_STORE_DIR = "${config.xdg.configHome}/pass";
     };
   };
   programs.git.enable = true;
