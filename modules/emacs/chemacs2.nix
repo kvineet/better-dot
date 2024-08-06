@@ -18,7 +18,6 @@
   xdg.configFile ={
     "chemacs/profiles.el".text = ''
     (("default" . ((user-emacs-directory . "~/.config/doom.emacs")
-                  (server-name . "doom")
                   (env . (("DOOMDIR" . "~/.config/doom")))
     ))
     )'';

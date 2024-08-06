@@ -11,6 +11,12 @@
     packages = with pkgs;
       [
         # ...various
+        aspell
+        aspellDicts.en
+        aspellDicts.en-science
+        aspellDicts.en-computers
+        aspellDicts.mr
+        aspellDicts.hi
         binutils
         (ripgrep.override { withPCRE2 = true; })
         gnutls
@@ -32,6 +38,7 @@
         # tree-sitter-grammars.tree-sitter-ledger
       ];
     sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
+
   };
   programs.zsh.zsh-abbr.abbreviations = {
     "e" = "emacsclient -n";
