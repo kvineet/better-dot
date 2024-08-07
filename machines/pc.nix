@@ -15,6 +15,7 @@
     ./common.nix
     ../features/azk8s
     ../modules/utils/ledger
+    ../modules/utils/barrier
   ];
 
   nixpkgs = {
