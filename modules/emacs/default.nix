@@ -15,31 +15,40 @@
   home = {
     packages = with pkgs; [
       # ...various
+      (ripgrep.override { withPCRE2 = true; })
       aspell
       aspellDicts.en
-      aspellDicts.en-science
       aspellDicts.en-computers
-      aspellDicts.mr
+      aspellDicts.en-science
       aspellDicts.hi
-      binutils
-      (ripgrep.override { withPCRE2 = true; })
-      gnutls
-      fd
-      imagemagick
-      zstd
-      nodePackages.javascript-typescript-langserver
-      sqlite
-      editorconfig-core-c
-      emacsPackages.nerd-icons
-      emacs-all-the-icons-fonts
-      nerdfonts
+      aspellDicts.mr
       auctex
-      texliveFull
+      binutils
+      cargo
+      csharpier
+      dockfmt
+      editorconfig-core-c
+      emacs-all-the-icons-fonts
+      emacsPackages.nerd-icons
+      fd
+      gnutls
+      gnuplot
+      gomodifytags
+      gopls
+      gore
+      gotests
+      gotools
+      imagemagick
+      maim
       math-preview
-      emacsPackages.tree-sitter
-      tree-sitter-grammars.tree-sitter-go
-      # tree-sitter-grammars.tree-sitter-nix
-      # tree-sitter-grammars.tree-sitter-ledger
+      nerdfonts
+      rust-analyzer
+      rustc
+      shfmt
+      sqlite
+      texliveFull
+      xclip
+      zstd
     ];
     sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
 
