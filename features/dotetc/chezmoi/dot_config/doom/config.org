@@ -611,6 +611,36 @@ Keybindings
            :em_dash       "—")
 #+END_SRC
 
+*** Ellipsis
+Ellipsis are drop downs
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq truncate-string-ellipsis "▾"
+      org-ellipsis "▾"
+      which-key-ellipsis "▾"
+      magit-ellipsis '((margin
+                       (8230 . ">"))
+                      (t
+                       (8230 . "▾"))))
+#+END_SRC
+*** Line Numbers
+I am still unsure whether visual line mode is good or bad when it comes to tracking changes in git. but I am setting it on for now.
+
+I like relative numbers for quick vim actions.
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq visual-line-mode t
+      display-line-numbers-type 'visual)
+#+END_SRC
+*** Modline
+Configure =modline= to show some additional information
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq doom-modeline-project-detection 'projectile
+      doom-modeline-major-mode-icon t
+      doom-modeline-major-mode-color-icon t
+      doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
+      doom-modeline-enable-word-count t
+      doom-modeline-env-version t)
+#+END_SRC
+
 ** Org modules
 *** pretty
 **** center org buffers
@@ -1135,6 +1165,7 @@ Lets configure it the way we want
         leetcode-directory "~/projects/leetcode"))
 #+END_SRC
 * Configuration
+Configuration that can not be a module
 ** Org mode
 *** agenda
 **** Some files are never meant to get stuck
@@ -1182,19 +1213,6 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                       (org-agenda-skip-function
                        '(org-agenda-skip-entry-if 'scheduled))))))))
 #+END_SRC
-*** more =todo= keywords
-
-This is not working as intended.
-- [ ] debug
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(after! 'org
-  (setq org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-deadline-if-done t
-        org-todo-keywords '((sequence "TODO" "NEXT" "STRT" "WAIT" "HOLD" "|" "DONE" "KILL")
-                            (sequence "[ ]" "[-]" "[?]" "|" "[X]")
-                            (sequence "OKAY" "YES" "NO"))
-        ))
-#+END_SRC
 *** silos
 For now journals live in denote directory. It might change later.
 I have defined 2 silos default and =work= for now.
@@ -1213,60 +1231,48 @@ I have defined 2 silos default and =work= for now.
 (setq org-excalidraw-directory (vk/sync-directory "excalidraw"))
 #+END_SRC
 *** capture templates
+- New todo items, ideas and links go to ~inbox.org~, then ingest it in as part of daily review.
+#+name: org-capture-inbox
+#+BEGIN_SRC emacs-lisp
+("t" "todo" entry (file ,(vk/org-directory "inbox.org"))
+ "* TODO %?")
+("i" "idea" entry (file ,(vk/org-directory  "inbox.org"))
+ "* IDEA %?")
+("l" "link" entry (file ,(vk/org-directory "inbox.org"))
+ "* TODO %(org-cliplink-capture)" :immediate-finish t)
+#+END_SRC
+- While working on something while clocked in, capture notes quickly
+#+name: org-capture-clockin
+#+BEGIN_SRC emacs-lisp
+("c" "Current clock in" item (clock)
+ "- %U %?")
+#+END_SRC
+- Take journal entries from anywhere.
+#+name: org-capture-journal
+#+BEGIN_SRC emacs-lisp
+("j" "Journal entry" entry (file ,(vk/today-journal-file))
+ "* %? \n%U %f")
+#+END_SRC
+- support org-protocol
+#+name: org-capture-protocol
+#+BEGIN_SRC emacs-lisp
+("z" "org-protocol-capture" entry (file ,(vk/org-directory "inbox.org"))
+ "* TODO [[%:link][%:description]]\n\n %i" :immediate-finish t)
+("Z" "org-protocol-capture" entry (file ,(vk/org-directory "inbox.org"))
+ "* TODO [[%:link][%:description]]\n\n %i" :immediate-finish t)
+#+END_SRC
+- bring it all together
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-capture-templates
-      `(("t" "todo" entry (file ,(vk/org-directory "inbox.org"))
-         "* TODO %?")
-        ("i" "idea" entry (file ,(vk/org-directory  "inbox.org"))
-         "* IDEA %?")
-        ("l" "link" entry (file ,(vk/org-directory "inbox.org"))
-         "* TODO %(org-cliplink-capture)" :immediate-finish t)
-        ("c" "Current clock in" item (clock)
-         "- %U %?")
-        ("j" "Journal entry" entry (file ,(vk/today-journal-file))
-         "* %? \n%U %f")
-        ("z" "org-protocol-capture" entry (file ,(vk/org-directory "inbox.org"))
-         "* TODO [[%:link][%:description]]\n\n %i" :immediate-finish t)
-        ("Z" "org-protocol-capture" entry (file ,(vk/org-directory "inbox.org"))
-         "* TODO [[%:link][%:description]]\n\n %i" :immediate-finish t)))
-#+END_SRC
-* Workarounds
-** Disable perspective mode from launching new workspace
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(after! persp-mode
-  (setq persp-emacsclient-init-frame-behaviour-override "main"))
-#+END_SRC
-** disable undo-fu compression
-I have plenty of disk space, this is stupid default. It also breaks every-time.
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(setq undo-fu-session-compression nil)
-#+END_SRC
-* Prettification
-** Modline
-Configure =modline= to show some additional information
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(setq doom-modeline-project-detection 'project)
-(setq doom-modeline-major-mode-icon t)
-(setq doom-modeline-major-mode-color-icon t)
-(setq doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode))
-(setq doom-modeline-env-version t)
-#+END_SRC
-** Line Numbers
-This determines the style of line numbers in effect. If set to `nil', line
-numbers are disabled. For relative line numbers, set this to `relative'.
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(setq visual-line-mode t)
-(setq display-line-numbers-type nil)
-#+END_SRC
-** Ellipsis
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(setq truncate-string-ellipsis "▾")
-#+END_SRC
-** packages
-#+BEGIN_SRC emacs-lisp :tangle packages.el
-(package! org-pretty-tags)
+      `(
+        <<org-capture-inbox>>
+        <<org-capture-clockin>>
+        <<org-capture-journal>>
+        <<org-capture-protocol>>
+        ))
 #+END_SRC
 * COMMENT Archive
+No longer in use. will delete at some point
 ** =org-roam=
 *** helper functions
 **** add property for dailies
@@ -1432,5 +1438,15 @@ Configure Elfeed goodies
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
+** org-pretty-tags
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! org-pretty-tags)
+#+END_SRC
+** Disable perspective mode from launching new workspace
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(after! persp-mode
+  (setq persp-emacsclient-init-frame-behaviour-override "main"))
+#+END_SRC
 * Local
+buffer local words that I don't want in my personal dictionary
 #  LocalWords:  KVineet Modline modline Prettification leetcode LeetCode
