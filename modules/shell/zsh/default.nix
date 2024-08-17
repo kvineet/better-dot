@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   globals,
   ...
 }:
@@ -30,10 +31,20 @@
     enable = true;
     dotDir = ".config/zsh";
     initExtra = builtins.readFile ./zshrc;
-    envExtra = ''
-      # Environment variables
-      . "${config.xdg.stateHome}/nix/profile/etc/profile.d/hm-session-vars.sh"
-    '';
     zsh-abbr.enable = true;
   };
+  # For some reason home manager imports "${HOME}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+  # but our nix profile directory is in "${config.xdg.stateHome}/nix/profile/etc/profile.d/hm-session-vars.sh"
+  # hence the mkForce
+
+  home.file.".config/zsh/.zshenv".text = lib.mkForce ''
+    # Environment variables
+    . "${config.xdg.stateHome}/nix/profile/etc/profile.d/hm-session-vars.sh"
+
+    # Only source this once
+    if [[ -z "$__HM_ZSH_SESS_VARS_SOURCED" ]]; then
+       export __HM_ZSH_SESS_VARS_SOURCED=1
+    fi
+    export ZDOTDIR=$HOME/'.config/zsh'
+  '';
 }
