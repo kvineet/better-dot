@@ -9,7 +9,7 @@
   home = {
     packages = with pkgs; [ barrier ];
   };
-  xdg.configHome = {
+  xdg.configFile = {
     "barrier/server.conf".text = ''
       section: screens
               kvineet-pc:

@@ -24,6 +24,7 @@
     # Configure your nixpkgs instance
     config = { };
   };
+  home.packages = with pkgs; [ yakuake ];
   programs.zsh.zsh-abbr.abbreviations = {
     hm = "home-manager switch --flake ${globals.dotdir}#pc";
   };
