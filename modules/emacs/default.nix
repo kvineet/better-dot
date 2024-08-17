@@ -61,4 +61,19 @@
     "en" = "emacs -nw";
     "et" = "emacsclient -t";
   };
+  xdg.dataFile = {
+    "applications/org-protocol.desktop".text = ''
+      [Desktop Entry]
+      Name=org-protocol
+      Comment=Intercept calls from emacsclient to trigger custom actions
+      Categories=Other;
+      Keywords=org-protocol;
+      Icon=emacs
+      Type=Application
+      Exec=emacsclient %u
+      Terminal=false
+      StartupWMClass=Emacs
+      MimeType=x-scheme-handler/org-protocol;
+    '';
+  };
 }
