@@ -74,11 +74,11 @@
       Host github.com-kvineet
            HostName github.com
            User git
-           IdentityFile ~/.ssh/id_rsa
+           IdentityFile ~/.ssh/id_ed25519
       Host gitlab.com-kvineet
            HostName gitlab.com
            User git
-           IdentityFile ~/.ssh/id_rsa
+           IdentityFile ~/.ssh/id_ed25519
       Host github.com-engineerwolf
            HostName github.com
            User git
