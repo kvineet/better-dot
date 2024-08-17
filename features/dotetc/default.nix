@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  globals,
   ...
 }:
 {
@@ -17,6 +18,12 @@
          DRY_RUN_ARG="--dry-run"
       fi
       ${lib.getExe pkgs.chezmoi} $VERBOSE_ARG $DRY_RUN_ARG init --apply
+    '';
+  };
+  xdg.configFile.chezmoiConf = {
+    target = "chezmoi/chezmoi.yaml";
+    text = ''
+      sourceDir: ${globals.dotdir}/features/dotetc/chezmoi
     '';
   };
 }
