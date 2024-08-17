@@ -6,12 +6,9 @@
     ../../modules/kubernetes
   ];
   home = {
-    packages = with pkgs;
-      [
-        azure-cli
-      ];
+    packages = with pkgs; [ azure-cli ];
     sessionVariables = {
-      AZURE_CONFIG_DIR = "${config.xdg.dataHome}/pass";
+      AZURE_CONFIG_DIR = "${config.xdg.stateHome}/azure";
     };
   };
 }
