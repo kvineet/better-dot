@@ -59,7 +59,7 @@ Set up header for =packages.el=
 Use =srcdc= snippet to create source block for =config.el= file. =srcdp= snippet
 creates source block for =init.el=, while =srcdp= snippet creates source block for
 =packages.el=
-*** =init= snippet
+*** =init=
 #+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-init"
 # -*- mode: snippet -*-
 # name: src-doom-init
@@ -69,7 +69,7 @@ creates source block for =init.el=, while =srcdp= snippet creates source block f
 $1
 ,#+END_SRC
 #+END_SRC
-*** =config= snippet
+*** =config=
 #+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-config"
 # -*- mode: snippet -*-
 # name: src-doom-config
@@ -79,8 +79,8 @@ $1
 $1
 ,#+END_SRC
 #+END_SRC
-*** =package= snippet
-#+BEGIN_SRC text :tangle "snippets/org-mode/src-doom-packages"
+*** =package=
+#+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-packages"
 # -*- mode: snippet -*-
 # name: src-doom-packages
 # key: srcdp
@@ -89,8 +89,8 @@ $1
 $1
 ,#+END_SRC
 #+END_SRC
-*** =module-init= snippet
-#+BEGIN_SRC text :tangle "snippets/org-mode/src-doom-module-init"
+*** =module-init=
+#+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-module-init"
 # -*- mode: snippet -*-
 # name: src-doom-module-init
 # key: srcdmi
@@ -99,8 +99,8 @@ $1
 $2
 ,#+END_SRC
 #+END_SRC
-*** =module-package= snippet
-#+BEGIN_SRC text :tangle "snippets/org-mode/src-doom-module-packages"
+*** =module-package=
+#+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-module-packages"
 # -*- mode: snippet -*-
 # name: src-doom-module-packages
 # key: srcdmp
@@ -109,8 +109,8 @@ $2
 $2
 ,#+END_SRC
 #+END_SRC
-*** =module-config= snippet
-#+BEGIN_SRC text :tangle "snippets/org-mode/src-doom-module-config"
+*** =module-config=
+#+BEGIN_SRC snippet :tangle "snippets/org-mode/src-doom-module-config"
 # -*- mode: snippet -*-
 # name: src-doom-module-config
 # key: srcdmc
@@ -566,8 +566,6 @@ Configure the svg package
         (setq keyword (car keywords)))))
   (add-hook 'org-agenda-finalize-hook #'org-agenda-show-svg))
 #+END_SRC
-**** tags
-Lets define tags that would #+begin_type options
 *** focus
 =Focus= on the line at hand
 #+BEGIN_SRC emacs-lisp :tangle modules/myui/focus/packages.el
@@ -612,8 +610,6 @@ Keybindings
             :identifier    "𑗕"
            :em_dash       "—")
 #+END_SRC
-
-#+RESULTS:
 
 ** Org modules
 *** pretty
@@ -677,11 +673,11 @@ Set all this in hook
 **** appear
 Make invisible parts of Org elements appear visible while editing.
 
-[2024-08-06 Tue] moved back to main branch. ~doom upgrade~ was failing with ~org-9.7-fixes~ branch. Moving to main branch shows no regression.
-
-[2024-07-17 Wed] After fix in [[https://github.com/awth13/org-appear/pull/59][#59]] got merged, pinning is no longer required. However, [[https://github.com/awth13/org-appear/issues/53#issuecomment-2231055635][Comment from maintainer]] suggests moving to =org-9.7-fixes= branch.
-
-[2025-07-03 Thu] +In [[https://github.com/awth13/org-appear/pull/48][this commit]], =org-fold= support got added to =org-appear=. While this change intended to fix the issue with link. It appears to break it on my configuration. thus pinning the =org-appear= to commit before this change.+
+Editing markup in =org= can be fiddly sometimes. =org-appear= makes this easier by
+making the elements appear when  cursor is on them.
+- *show ~emphasis~ markers*
+- /show =submarkers= as well/
+- show [[https://google.com][Links are great]]
 
 #+BEGIN_SRC emacs-lisp :tangle modules/org/pretty/packages.el
 ;; -*- no-byte-compile: t; -*-
@@ -693,11 +689,13 @@ Make invisible parts of Org elements appear visible while editing.
            :repo "awth13/org-appear")
 )
 #+end_src
-Editing markup in =org= can be fiddly sometimes. =org-appear= makes this easier by
-making the elements appear when  cursor is on them.
-- *show ~emphasis~ markers*
-- /show =submarkers= as well/
-- show [[https://google.com][Links are great]]
+
+- [2024-08-06 Tue] moved back to main branch. ~doom upgrade~ was failing with ~org-9.7-fixes~ branch. Moving to main branch shows no regression.
+
+- [2024-07-17 Wed] After fix in [[https://github.com/awth13/org-appear/pull/59][#59]] got merged, pinning is no longer required. However, [[https://github.com/awth13/org-appear/issues/53#issuecomment-2231055635][Comment from maintainer]] suggests moving to =org-9.7-fixes= branch.
+
+- [2025-07-03 Thu] +In [[https://github.com/awth13/org-appear/pull/48][this commit]], =org-fold= support got added to =org-appear=. While this change intended to fix the issue with link. It appears to break it on my configuration. thus pinning the =org-appear= to commit before this change.+
+
 #+BEGIN_SRC emacs-lisp :tangle "modules/org/pretty/config.el"
 (use-package! org-appear
   :hook (org-mode . org-appear-mode)
