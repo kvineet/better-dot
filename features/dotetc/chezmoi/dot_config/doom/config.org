@@ -171,12 +171,17 @@ Define paths related to org files.
   (expand-file-name FILE denote-directory))
 #+END_SRC
 **** agenda files
+Use the usual files for agenda
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-agenda-files (list
                         (vk/org-directory "gtd.org")
-                        (vk/org-directory "Backlog.org")
-                        (denote-directory)))
+                        (vk/org-directory "Backlog.org")))
 #+END_SRC
+Then also include files taged ~_project~ from ~denote~ directory
+#+begin_src emacs-lisp :tangle config.el
+(dolist (org-file (directory-files (denote-directory) t "_project" nil))
+        (add-to-list 'org-agenda-files org-file))
+#+end_src
 *** COMMENT ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ledger-directory (expand-file-name "accounting" vault-directory))
