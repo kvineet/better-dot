@@ -1,0 +1,9 @@
+[Appearance]
+Skin=dracula
+SkinInstalledWithKns=true
+
+[Dialogs]
+FirstRun=false
+
+[Window]
+Width=100

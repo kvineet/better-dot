@@ -1,0 +1,24 @@
+# intentionally ephemeral
+.cache
+.local/state
+
+
+# managed by nix
+.zshenv
+.config/zsh
+.config/zsh-abbr
+
+
+# regular folders
+Desktop
+Documents
+Downloads
+Music
+Pictures
+Public
+Templates
+Videos
+accounting
+go
+projects
+sync
