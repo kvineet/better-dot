@@ -200,10 +200,13 @@ Then also include files taged ~_project~ from ~denote~ directory
 (defvar vk/default-font-size 24)
 (defvar vk/big-font-size 36)
 (defvar vk/default-variable-font-size 24)
-(defvar vk/default-font "Iosevka Nerd Font")
+(defvar vk/default-font "CaskaydiaCove Nerd Font")
+;;(defvar vk/default-font "Iosevka Nerd Font")
 (defvar vk/fixed-pitch-font "Iosevka Term Extended")
-(defvar vk/variable-pitch-font "Iosevka Nerd Font")
+(defvar vk/variable-pitch-font "CaskaydiaCove Nerd Font")
+;;(defvar vk/variable-pitch-font "Iosevka Nerd Font")
 #+END_SRC
+
 Doom exposes five (optional) variables for controlling fonts in Doom. Here
 are the three important ones:
 
@@ -216,13 +219,17 @@ They all accept either a font-spec, =font string ("Input Mono-12")=, or ~xlfd fo
 string~.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq doom-font
-      (font-spec :family vk/default-font :size vk/default-font-size))
+      (font-spec :family vk/default-font :width 'normal :weight 'regular :slant 'normal :size vk/default-font-size))
 (setq doom-big-font
       (font-spec :family vk/default-font :size vk/big-font-size))
 (setq doom-variable-pitch-font
-      (font-spec :family vk/variable-pitch-font :size vk/default-variable-font-size))
-(setq doom-symbol-font (font-spec :family vk/default-font))
+      (font-spec :family vk/variable-pitch-font  :width 'normal :weight 'regular :slant 'normal :size vk/default-variable-font-size))
+(setq doom-symbol-font (font-spec :family vk/default-font :width 'normal :weight 'regular :slant 'normal ))
 #+END_SRC
+
+#+RESULTS:
+: #<font-spec nil nil Iosevka\ Nerd\ Font nil nil regular normal normal nil nil nil nil nil>
+
 * Doom modules
 ** . =init.el=
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -1044,6 +1051,12 @@ Lets configure it the way we want
   (add-hook 'dired-mode-hook #'denote-dired-mode)
   (add-hook 'org-mode-hook #'denote-rename-buffer-mode))
 
+
+(defun denote-note-with-name (NAME &optional SILO)
+   "finds the denote file given its name"
+   (let ((SILO (if SILO SILO denote-directory)))
+     (nth 0 (directory-files SILO t (denote-sluggify-title NAME) t 1))))
+
 (map!
  :leader
  (:prefix-map ("f" . "file")
@@ -1066,23 +1079,51 @@ Lets configure it the way we want
 (defvar denote--journal-silo-directory
   (expand-file-name "journal" (file-name-parent-directory denote-directory)) "Defines the location of journal silo")
 
-(defun my-denote-journal ()
-  "Create an entry tagged 'journal', while prompting for a title."
-  (interactive)
-  (denote-open-or-create (vk/today-journal-file)))
+(defvar denote-journal-kill-after-create t
+  "kill buffer after creating")
 
-(defun vk/today-journal-file()
-  "returns today's journal file"
+(defun denote-journal--today-filename ()
+  "Returns today's journal file name"
   (expand-file-name (concat
                      (format-time-string "%Y%m%dT000000--")
                      (downcase (format-time-string "%A-%d-%B-%Y__%Y_journal.org")))
                     denote--journal-silo-directory))
 
+(defun denote-journal--ensure ()
+  "Creates denote journal file if it does not exists"
+  (unless (f-file-p (denote-journal--today-filename))
+    (let* ((title (format-time-string "%A, %d %B %Y"))
+           (keywords `("journal" ,(format-time-string "%Y")))
+           (date  (encode-time (append '(0 0 0) (nthcdr 3 (decode-time)))))
+           (denote-save-buffers denote-journal-kill-after-create)
+           (denote-directory denote--journal-silo-directory)
+           (journal (denote title keywords "org" nil date nil nil))
+           (buffer (find-buffer-visiting journal)))
+      (unless denote-journal-kill-after-create
+        (kill-buffer buffer)))))
+
+
+(defun my-journal-today()
+  "Opens today's journal file, creating it if it does not exists."
+  (interactive)
+  (let ((denote-journal-kill-after-create nil))
+    (denote-journal--ensure)
+    (find-file (denote-journal--today-filename))))
+
+(defun +org-capture-journal-file ()
+  "Return today's journal file, ensuring its created with denote.
+
+This is intended to be used with \"org-capture\""
+  (let ((denote-journal-kill-after-create t))
+    (denote-journal--ensure))
+  (denote-journal--today-filename))
+
 (map!
  :leader
  :map global-map
- :desc "denote journal" "n j" #'my-denote-journal)
+ :desc "denote journal" "n j" #'my-journal-today)
 #+END_SRC
+
 **** consult-denote
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/consult.el
 ;;; -*- lexical-binding: t; -*-
@@ -1204,19 +1245,42 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                      ((org-agenda-overriding-header "Not Urgent But Important")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
           ))
-        ("p" "Planning"
-         ((tags-todo "+@planning"
-                     ((org-agenda-overriding-header "Planning Tasks")
-                      (org-agenda-hide-tags-regexp
-                       (regexp-opt '("gtd" "TODO" "@planning")))
-                      (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'scheduled))))
-          (tags-todo "-{@.*}"
-                     ((org-agenda-overriding-header "Untagged Tasks")
-                      (org-agenda-hide-tags-regexp
-                       (regexp-opt '("gtd" "TODO" "@planning")))
-                      (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'scheduled))))))))
+        ("m" "Mobile tasks"
+         ((tags-todo "+@mobile"
+                     ((org-agenda-prefix-format "%t%s")
+                      (org-agenda-sorting-strategy '(tag-up priority-down))
+                      (org-agenda-todo-keyword-format ""))))
+         ((org-agenda-with-colors nil)
+          (org-agenda-compact-blocks t)
+          (org-agenda-remove-tags t))
+          ("~/mobile.txt"))
+         ("v" . "Views")
+         ("vm" "Maintainance View"
+          ((tags-todo "+@maint"
+                      ((org-agenda-overriding-header "Maintainance Tasks")))))
+         ("vl" "Learning View"
+          ((tags-todo "+@learn"
+                      ((org-agenda-overriding-header "Learning Tasks")))))
+         ("vc" "Cleaning View"
+          ((tags-todo "+@clean"
+                      ((org-agenda-overriding-header "Cleaning Tasks")))))
+         ("vt" "Tinkering View"
+          ((tags-todo "+@tink"
+                      ((org-agenda-overriding-header "Tinkering Tasks")))))
+         ("p" "Planning"
+          ((tags-todo
+            "+@planning"
+            ((org-agenda-overriding-header "Planning Tasks")
+             (org-agenda-hide-tags-regexp
+              (regexp-opt '("gtd" "TODO" "@planning")))
+             (org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'scheduled))))
+           (tags-todo "-{@.*}"
+                      ((org-agenda-overriding-header "Untagged Tasks")
+                       (org-agenda-hide-tags-regexp
+                        (regexp-opt '("gtd" "TODO" "@planning")))
+                       (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if 'scheduled))))))))
 #+END_SRC
 *** silos
 For now journals live in denote directory. It might change later.
@@ -1255,8 +1319,10 @@ I have defined 2 silos default and =work= for now.
 - Take journal entries from anywhere.
 #+name: org-capture-journal
 #+BEGIN_SRC emacs-lisp
-("j" "Journal entry" entry (file ,(vk/today-journal-file))
- "* %? \n%U %f")
+("j" "Journal entry" entry (file ,(+org-capture-journal-file))
+ "* %? \n%U [[%f]]")
+("a" "Montesary Activity" entry (file ,(denote-note-with-name "Montessori Workshop"))
+ "* Day %? \n")
 #+END_SRC
 - support org-protocol
 #+name: org-capture-protocol
