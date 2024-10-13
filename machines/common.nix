@@ -60,8 +60,6 @@
       fzf
       jq
       yq-go
-      taskwarrior
-      taskwarrior-tui
       go
       gh
     ];
