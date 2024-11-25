@@ -15,6 +15,7 @@
     ../features/nix
     ../modules/shell
     ../modules/emacs
+    ../modules/neovim
     ../modules/cloud/cloudflare
     ../modules/cloud/syncthing
     ../modules/cloud/bitwarden

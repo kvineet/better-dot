@@ -37,6 +37,7 @@
         };
         "pc" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          targets.genericLinux.enable = true;
           extraSpecialArgs = { inherit globals; };
           modules = [
             ./machines/pc.nix

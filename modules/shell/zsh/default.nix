@@ -31,7 +31,6 @@
     enable = true;
     dotDir = ".config/zsh";
     initExtra = builtins.readFile ./zshrc;
-    zsh-abbr.enable = true;
   };
   # For some reason home manager imports "${HOME}/.nix-profile/etc/profile.d/hm-session-vars.sh"
   # but our nix profile directory is in "${config.xdg.stateHome}/nix/profile/etc/profile.d/hm-session-vars.sh"

@@ -85,7 +85,7 @@ zinit ice \
     nocompile
 zinit light zdharma-continuum/null
 
-compdef kubecolor=kubectl
+# compdef kubecolor=kubectl
 
 zinit as"null" wait"1" lucid for \
     sbin    Fakerr/git-recall \
