@@ -41,7 +41,10 @@
       imagemagick
       maim
       math-preview
-      nerdfonts
+      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
+      nerd-fonts.iosevka-term-slab
+      nerd-fonts.caskaydia-cove
       rust-analyzer
       rustc
       shfmt
