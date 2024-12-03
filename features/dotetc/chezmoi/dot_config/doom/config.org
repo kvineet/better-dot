@@ -986,7 +986,7 @@ generate =svg-tag= based on org progress cookie
 *** Quality of Life
 **** . load modules
 #+BEGIN_SRC emacs-lisp :tangle modules/org/qol/config.el
-(dolist (flag (doom-module-context-get :flags))
+(dolist (flag (doom-module :org 'qol :flags))
   (load! (concat "contrib/" (substring (symbol-name flag) 1)) nil t))
 #+END_SRC
 **** more priorities
@@ -1134,7 +1134,7 @@ Lets configure it the way we want
 #+end_src
 **** . load modules
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/config.el
-(dolist (flag (doom-module-context-get :flags))
+(dolist (flag (doom-module :org 'denote :flags))
   (load! (concat "contrib/" (substring (symbol-name flag) 1)) nil t))
 #+END_SRC
 
