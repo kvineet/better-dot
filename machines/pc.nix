@@ -14,6 +14,7 @@
   imports = [
     ./common.nix
     ../features/azk8s
+    ../features/services
     ../modules/utils/ledger
     ../modules/utils/barrier
   ];
@@ -26,6 +27,6 @@
   };
   home.packages = with pkgs; [ yakuake ];
   programs.zsh.zsh-abbr.abbreviations = {
-    hm = "home-manager switch --flake ${globals.dotdir}#pc";
+    hm = "home-manager switch --flake ${globals.dirs.dotdir}#pc";
   };
 }

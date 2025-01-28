@@ -16,11 +16,26 @@
         username = "kvineet";
         winUser = "vinekulkarni";
         name = "Vineet Kulkarni";
-        dotdir = "/home/kvineet/projects/better-dot";
+        dirs = {
+          downloads = "/home/${globals.username}/Downloads";
+          webdav = "/srv/webDav";
+          blk = "/media/HandPortal";
+          dotdir = "/home/${globals.username}/projects/better-dot";
+          containerDir = "/home/${globals.username}/.config/containers/systemd";
+        };
       };
     in
     {
       packages.${system}.default = home-manager.packages.${system}.default;
+      nixosConfigurations = {
+        "pc" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./machines/sys-pc.nix
+          ];
+        };
+      };
       homeConfigurations = {
         "kvineet" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;

@@ -9,9 +9,8 @@
     ./chemacs2.nix
     ./doom.nix
   ];
-  programs.emacs.enable = true;
-  programs.emacs.package = pkgs.emacs29;
-  services.emacs.enable = true;
+  programs.emacs.enable = false;
+  services.emacs.enable = false;
   home = {
     packages = with pkgs; [
       # ...various

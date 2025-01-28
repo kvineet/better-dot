@@ -14,7 +14,7 @@
   imports = [
     ./common.nix
     ../features/wsl
-   #../features/azk8s
+    #../features/azk8s
     ../modules/utils/ledger
     ../modules/utils/sql
   ];
@@ -26,7 +26,7 @@
     config = { };
   };
   programs.zsh.zsh-abbr.abbreviations = {
-    hm = "home-manager switch --flake ${globals.dotdir}#msft";
+    hm = "home-manager switch --flake ${globals.dirs.dotdir}#msft";
   };
 
   programs.git.includes = [

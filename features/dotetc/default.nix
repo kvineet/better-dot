@@ -23,7 +23,7 @@
   xdg.configFile.chezmoiConf = {
     target = "chezmoi/chezmoi.yaml";
     text = ''
-      sourceDir: ${globals.dotdir}/features/dotetc/chezmoi
+      sourceDir: ${globals.dirs.dotdir}/features/dotetc/chezmoi
     '';
   };
 }
