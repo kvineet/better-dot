@@ -27,15 +27,6 @@
     in
     {
       packages.${system}.default = home-manager.packages.${system}.default;
-      nixosConfigurations = {
-        "pc" = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./machines/sys-pc.nix
-          ];
-        };
-      };
       homeConfigurations = {
         "kvineet" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
