@@ -5,7 +5,7 @@
   ...
 }:
 {
-
+  xdg.enable = true;
   home.packages = with pkgs; [ nixfmt-rfc-style ];
   xdg.configFile = {
     "nix/nix.conf".text = ''
