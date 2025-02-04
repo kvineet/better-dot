@@ -45,18 +45,14 @@ echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 passwd <username>
 exit
 #+END_SRC
-** add wslu keys
-#+BEGIN_SRC sh
-wget https://pkg.wslutiliti.es/public.key
-pacman-key --add public.key
-pacman-key --lsign-key 2D4C887EB08424F157151C493DD50AA7E055D853
-#+END_SRC
-#+BEGIN_QUOTE
-FROM: https://wslutiliti.es/wslu/install.html
-#+END_QUOTE
 ** Update arch
 #+BEGIN_SRC
+sudo pacman-key --init
+
+sudo pacman-key --populate
+
 sudo pacman -Sy archlinux-keyring
+
 sudo pacman -Syu
 #+END_SRC
 ** Set default user
