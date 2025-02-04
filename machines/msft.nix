@@ -14,7 +14,7 @@
   imports = [
     ./common.nix
     ../features/wsl
-    #../features/azk8s
+    ../features/azk8s
     ../modules/utils/ledger
     ../modules/utils/sql
   ];
