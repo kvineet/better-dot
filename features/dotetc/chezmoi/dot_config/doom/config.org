@@ -3,8 +3,8 @@
 #+email: mail@kvineet.in
 #+startup: overview
 #+filetags: :NOTSTUCK:
-#+TODO: TODO | DONE
-#+TODO: | .
+#+TODO: TODO(t) | DONE(d)
+#+TODO: | .(.)
 #+property: header-args :comments no :noweb no-export :mkdirp yes :tangle no
 #+html_head: <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
 https://github.com/tecosaur/emacs-config/blob/master/config.org
@@ -182,8 +182,6 @@ Then also include files tagged ~_project~ from ~denote~ directory
 (dolist (org-file (directory-files (denote-directory) t "_project" nil))
         (add-to-list 'org-agenda-files org-file))
 #+end_src
-
-#+RESULTS:
 
 *** COMMENT ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -523,7 +521,7 @@ ligatures
 (denote
  +journal
  +consult
- +silos
+ +silo
  +menu)
 (pretty +ligatures +svg)
 (qol +calfw)
@@ -1161,11 +1159,11 @@ This is intended to be used with \"org-capture\""
  :map global-map
  :desc "consult notes" "s n" #'consult-denote-grep)
 #+END_SRC
-**** TODO silos
-- [ ] Make silos work with menu
-#+BEGIN_SRC emacs-lisp :tangle modules/org/denote/config.el
+**** silos
+#+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/silo.el
+;;; -*- lexical-binding: t; -*-
+<<license>>
 (require 'denote-silo-extras)
-
 (map!
  :leader
  :map global-map
@@ -1173,17 +1171,6 @@ This is intended to be used with \"org-capture\""
 #+END_SRC
 **** denote-menu
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/menu.el
-(defun my/jounal-files()
-  "displays journal files in a denote-menu"
-  (interactive)
-  (setq denote-menu-current-regex "_journal")
-  (denote-menu-update-entries))
-(defun my/nonjounal-files()
-  "displays journal files in a denote-menu"
-  (interactive)
-  (denote-menu-filter-out-keyword '("journal"))
-  (denote-menu-update-entries))
-
 (use-package! denote-menu
   :config
   (setq denote-directory-files-matching-regexp denote-menu-initial-regex)
@@ -1201,7 +1188,30 @@ This is intended to be used with \"org-capture\""
    :desc "non journal files" :nv "d" #'my/nonjounal-files
    :desc "export to dired" :nv "e" #'denote-menu-export-to-dired)
   (set-popup-rule! "^\\*Denote" :ignore t))
+
+(when
+    (modulep! :org denote +silo)
+(defun list-denotes-select-silo (&optional silo)
+  "Select SILO and run `list-denote' in it.
+SILO is a file path from `denote-silo-extras-directories'
+
+When called from Lisp, SILO is a file system path to a directory that
+conforms with `denote-silo-extras-path-is-silo-p'."
+  (interactive
+   (list
+    (denote-silo-extras-directory-prompt)
+    ))
+  (denote-silo-extras-with-silo silo
+    (let ((denote-directory silo))
+      (list-denotes))))
+(map!
+   :leader
+   :map global-map
+   :desc "denote silo list" "n Z" #'list-denotes-select-silo))
 #+end_src
+
+#+RESULTS:
+
 *** org-protocol
 #+BEGIN_SRC emacs-lisp :tangle modules/org/protocol/config.el
 (require 'org-protocol)
@@ -1241,6 +1251,14 @@ This is intended to be used with \"org-capture\""
 * Configuration
 Configuration that can not be a module
 ** Org mode
+*** =todo= sequence
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)")
+       (sequence "PROJ(p)" "LOOP(r)" "IDEA(i)" "|" "DONE(d)" "KILL(k)")
+       (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+       (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+#+end_src
 *** agenda
 **** Some files are never meant to get stuck
 Don't want things in stuck projects that can never get stuck. There probably is
@@ -1288,8 +1306,9 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                      ((org-agenda-overriding-header "Download Tasks"))))
          ((org-agenda-files (directory-files (denote-directory) 'full (rx "goblin") nil))))
         ("vm" "Maintainance View"
-         ((agenda "+@maint"
-                     ((org-agenda-overriding-header "Maintainance Tasks"))))
+         ((tags-todo "+@maint"
+                     ((org-agenda-overriding-header "Maintainance Tasks")
+                      (org-agenda-span 'week))))
          ((org-agenda-files (directory-files (denote-directory) 'full (rx "_project") nil))))
         ("vl" "Learning View"
          ((tags-todo "+@learn"
@@ -1324,6 +1343,9 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                       (org-agenda-skip-function
                        '(org-agenda-skip-entry-if 'scheduled))))))))
 #+END_SRC
+
+#+RESULTS:
+: ((d Today ((agenda  ((org-agenda-start-day ) (org-agenda-span 'day) (org-deadline-warning-days 7) (org-agenda-scheduled-leaders '( Sched.%2dx: )) (org-agenda-overriding-header Today))) (tags-todo +PRIORITY="A" ((org-agenda-overriding-header Urgent and Important))) (tags-todo +PRIORITY="B" ((org-agenda-overriding-header Urgent Not Important))) (tags-todo +PRIORITY="C" ((org-agenda-overriding-header Not Urgent But Important) (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled)))))) (m Mobile tasks ((tags-todo +@mobile ((org-agenda-prefix-format %t%s) (org-agenda-sorting-strategy '(tag-up priority-down)) (org-agenda-todo-keyword-format )))) ((org-agenda-with-colors nil) (org-agenda-compact-blocks t) (org-agenda-remove-tags t)) (~/mobile.txt)) (v . Views) (vd Downloads View ((tags-todo /!WANT ((org-agenda-overriding-header Download Tasks)))) ((org-agenda-files (directory-files (denote-directory) 'full (rx goblin) nil)))) (vm Maintainance View ((tags-todo +@maint ((org-agenda-overriding-header Maintainance Tasks) (org-agenda-span 'week)))) ((org-agenda-files (directory-files (denote-directory) 'full (rx _project) nil)))) (vl Learning View ((tags-todo +@learn ((org-agenda-overriding-header Learning Tasks))))) (vc Cleaning View ((tags-todo +@clean ((org-agenda-overriding-header Cleaning Tasks))))) (vt Tinkering View ((tags-todo +@tink ((org-agenda-overriding-header Tinkering Tasks))))) (r Reading ((tags-todo +#25 ((org-agenda-overriding-header 2025 Reading List))) (tags-todo /!WANT ((org-agenda-overriding-header Books to Download)))) ((org-agenda-hide-tags-regexp .*) (org-agenda-files (directory-files (denote-directory) t _books nil)) (org-agenda-prefix-format '((tags . ))))) (p Planning ((tags-todo +@planning ((org-agenda-overriding-header Planning Tasks) (org-agenda-hide-tags-regexp (regexp-opt '(gtd TODO @planning))) (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled)))) (tags-todo -{@.*} ((org-agenda-overriding-header Untagged Tasks) (org-agenda-hide-tags-regexp (regexp-opt '(gtd TODO @planning))) (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled)))))))
 
 *** silos
 For now journals live in denote directory. It might change later.
@@ -1367,7 +1389,7 @@ Make journal entries from anywhere.
 #+BEGIN_SRC emacs-lisp
 ("j" "Journal entry" entry (file ,(+org-capture-journal-file))
  "* %? \n%U [[%f]]")
-("a" "Montesary Activity" entry (file ,(denote-note-with-name "Montessori Workshop"))
+("a" "Montesary Activity" entry (file ,(denote-note-with-name "Montessori Workshop Feb 2025"))
  "* Day %? \n")
 #+END_SRC
 **** support org-protocol
@@ -1388,6 +1410,14 @@ Make journal entries from anywhere.
         <<org-capture-protocol>>
         ))
 #+END_SRC
+
+#+RESULTS:
+| t | todo             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * TODO %?                      |                   |   |
+| i | idea             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * IDEA %?                           |                   |   |
+| l | link             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * TODO %(org-cliplink-capture) | :immediate-finish | t |
+| c | Current clock in | item  | (clock)                                                                                           | - %U %?                             |                   |   |
+| j | Journal entry    | entry | (file /home/kvineet/sync/org/journal/20250204T000000--tuesday-04-february-2025__2025_journal.org) | * %?                                |                   |   |
+
 * Snippets
 ** Daily review
 #+BEGIN_SRC snippet :tangle "snippets/org-mode/review-daily"
