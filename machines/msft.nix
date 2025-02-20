@@ -17,6 +17,7 @@
     ../features/azk8s
     ../modules/utils/ledger
     ../modules/utils/sql
+    ../modules/devtools
   ];
 
   nixpkgs = {
@@ -34,15 +35,16 @@
       condition = "hasconfig:remote.*.url:https://msazuredev@dev.azure.com/**";
       contentSuffix = "msft.gitconfig";
       contents = {
+      	core = {
+	  autocrlf = true;
+	};
         user = {
           email = "vinekulkarni@microsoft.com";
           name = "Vineet  Kulkarni";
         };
         credential = {
           "https://dev.azure.com".useHttpPath = true;
-          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-          credentialStore = "gpg";
-          cacheOptions = "--timeout 300";
+          helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";
         };
       };
     }
