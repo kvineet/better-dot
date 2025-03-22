@@ -17,6 +17,7 @@
     ../features/services
     ../modules/utils/ledger
     ../modules/utils/barrier
+    ../modules/devtools
   ];
 
   nixpkgs = {
@@ -25,7 +26,9 @@
     # Configure your nixpkgs instance
     config = { };
   };
-  home.packages = with pkgs; [ yakuake ];
+  home.packages = with pkgs; [
+    kdePackages.yakuake
+  ];
   programs.zsh.zsh-abbr.abbreviations = {
     hm = "home-manager switch --flake ${globals.dirs.dotdir}#pc";
   };

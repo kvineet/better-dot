@@ -271,7 +271,7 @@ string~.
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
-       tty               ; improve the terminal Emacs experience
+       ;; tty               ; improve the terminal Emacs experience
 
        :lang
        <<doom-lang>>
@@ -294,9 +294,10 @@ string~.
 #+name: doom-apps
 #+begin_src emacs-lisp
 ;;calendar
+;;emms
+;;everywhere        ; *leave* Emacs!? You must be joking
 ;;irc               ; how neckbeards socialize
-;;(rss +org)        ; emacs as an RSS reader
-;;twitter           ; twitter client https://twitter.com/vnought
+;;(rss +org)        ; emacs as an RSS reader;;calendar
 #+end_src
 ** completion
 #+name: doom-completion
@@ -305,13 +306,15 @@ string~.
 ;;+childframe)
 (corfu
   +icons
-  +orderless)
+  +orderless
+  +dabbrev)
 ;helm              ; the *other* search engine for love and life
 ;ido               ; the other *other* search engine...
 ; (ivy
 ; +icons
 ; +prescient)
 (vertico
+ +childframe
  +icons)
 #+end_src
 ** checkers
@@ -541,12 +544,14 @@ leetcode
 
 :emacs
 shortcuts
+;calibre
 
 :latex
 default
 #+end_src
 
-** shortcuts
+** emacs
+*** shortcuts
 #+BEGIN_SRC emacs-lisp :tangle modules/emacs/shortcuts/config.el
 (defun vk/open-gtd-file()
   "Opens GTD file in current window"
@@ -557,6 +562,16 @@ default
  :leader
  :map global-map
  :desc "Open GTD file" "f g" #'vk/open-gtd-file)
+#+END_SRC
+*** Books
+#+BEGIN_SRC emacs-lisp :tangle "modules/emacs/calibre/packages.el"
+(package! calibredb
+    :recipe (:host github
+             :repo "chenyanming/calibredb.el"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle modules/emacs/calibre/config.el
+(use-package! calibredb)
 #+END_SRC
 ** UI
 *** svg
@@ -1301,6 +1316,14 @@ conforms with `denote-silo-extras-path-is-silo-p'."
 #+END_SRC
 * Configuration
 Configuration that can not be a module
+** Be a serious editor
+*** no newlines please
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(add-hook 'text-mode-hook 'my-text-mode-hook)
+(defun my-text-mode-hook ()
+  "Custom behaviours for `text-mode'."
+  (setq-local require-final-newline nil))
+#+END_SRC
 ** Org mode
 *** =todo= sequence
 #+begin_src emacs-lisp
@@ -1465,6 +1488,16 @@ Make journal entries from anywhere.
 | l | link             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * TODO %(org-cliplink-capture) | :immediate-finish | t |
 | c | Current clock in | item  | (clock)                                                                                           | - %U %?                             |                   |   |
 | j | Journal entry    | entry | (file /home/kvineet/sync/org/journal/20250204T000000--tuesday-04-february-2025__2025_journal.org) | * %?                                |                   |   |
+
+** calibre
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq calibredb-root-dir ebooks-root-directory
+      calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)
+      calibredb-format-all-the-icons t)
+#+END_SRC
+
+#+RESULTS:
+: t
 
 * Snippets
 ** Daily review
@@ -1666,7 +1699,7 @@ Configure Elfeed goodies
 #+END_SRC
 ** =systemd= unit
 ** Workarounds
-*** hydra is better for =read-action=
+*** [#D] hydra is better for =read-action=
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
