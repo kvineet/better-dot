@@ -182,6 +182,11 @@ Define paths related to org files.
   "Returns the path in denote-directory"
   (expand-file-name FILE denote-directory))
 #+END_SRC
+**** =journal= directory
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq denote-journal-directory (vk/org-directory "journal"))
+#+END_SRC
+
 **** agenda files
 Use the usual files for agenda
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -451,7 +456,7 @@ hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 indent-guides     ; highlighted indent columns
 (ligatures
  +extra)
-;;minimap           ; show a map of the code on the side
+minimap           ; show a map of the code on the side
 modeline          ; snazzy, Atom-inspired modeline, plus API
 nav-flash         ; blink cursor line after big motions
 ;;neotree           ; a project drawer, like NERDTree for vim
@@ -1116,10 +1121,19 @@ Moving to the denote has simplified the life a lot.
 
 (package! denote)
 (package! denote-menu :recipe (:host github :repo "namilus/denote-menu"))
+(package! denote-org :recipe (:host github :repo "protesilaos/denote-org"))
+(when
+    (modulep! :org denote +silo)
+  (package! denote-silo
+    :recipe (:host github :repo "protesilaos/denote-silo")))
 (when
     (modulep! :org denote +consult)
   (package! consult-denote
     :recipe (:host github :repo "protesilaos/consult-denote")))
+(when
+    (modulep! :org denote +journal)
+  (package! denote-journal
+    :recipe (:host github :repo "kvineet/denote-journal")))
 #+end_src
 Lets configure it the way we want
 
@@ -1170,54 +1184,15 @@ Lets configure it the way we want
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/journal.el
 ;;; -*- lexical-binding: t; -*-
 <<license>>
-(defvar denote--journal-silo-directory
-  (expand-file-name "journal" (file-name-parent-directory denote-directory)) "Defines the location of journal silo")
-
-(defvar denote-journal-kill-after-create t
-  "kill buffer after creating")
-
-(defun denote-journal--today-filename ()
-  "Returns today's journal file name"
-  (expand-file-name (concat
-                     (format-time-string "%Y%m%dT000000--")
-                     (downcase (format-time-string "%A-%d-%B-%Y__%Y_journal.org")))
-                    denote--journal-silo-directory))
-
-(defun denote-journal--ensure ()
-  "Creates denote journal file if it does not exists"
-  (unless (f-file-p (denote-journal--today-filename))
-    (let* ((title (format-time-string "%A, %d %B %Y"))
-           (keywords `("journal" ,(format-time-string "%Y")))
-           (date  (encode-time (append '(0 0 0) (nthcdr 3 (decode-time)))))
-           (denote-save-buffers denote-journal-kill-after-create)
-           (denote-directory denote--journal-silo-directory)
-           (journal (denote title keywords "org" nil date nil nil))
-           (buffer (find-buffer-visiting journal)))
-      (unless denote-journal-kill-after-create
-        (kill-buffer buffer)))))
-
-
-(defun my-journal-today()
-  "Opens today's journal file, creating it if it does not exists."
-  (interactive)
-  (let ((denote-journal-kill-after-create nil))
-    (denote-journal--ensure)
-    (find-file (denote-journal--today-filename))))
-
-(defun +org-capture-journal-file ()
-  "Return today's journal file, ensuring its created with denote.
-
-This is intended to be used with \"org-capture\""
-  (let ((denote-journal-kill-after-create t))
-    (denote-journal--ensure))
-  (denote-journal--today-filename))
-
+(use-package! denote-journal
+  :config
+  (setq denote-journal-title-format "%A, %d %B %Y")
+  )
 (map!
  :leader
  :map global-map
- :desc "denote journal" "n j" #'my-journal-today)
+ :desc "denote journal" "n j" #'denote-journal-new-or-existing-entry)
 #+END_SRC
-
 **** consult-denote
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/consult.el
 ;;; -*- lexical-binding: t; -*-
@@ -1231,11 +1206,11 @@ This is intended to be used with \"org-capture\""
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/silo.el
 ;;; -*- lexical-binding: t; -*-
 <<license>>
-(require 'denote-silo-extras)
+(require 'denote-silo)
 (map!
  :leader
  :map global-map
- :desc "denote in silo" "n s" #'denote-silo-extras-create-note)
+ :desc "denote in silo" "n s" #'denote-silo-create-note)
 #+END_SRC
 **** denote-menu
 #+BEGIN_SRC emacs-lisp :tangle modules/org/denote/contrib/menu.el
@@ -1261,15 +1236,15 @@ This is intended to be used with \"org-capture\""
     (modulep! :org denote +silo)
 (defun list-denotes-select-silo (&optional silo)
   "Select SILO and run `list-denote' in it.
-SILO is a file path from `denote-silo-extras-directories'
+SILO is a file path from `denote-silo-directories'
 
 When called from Lisp, SILO is a file system path to a directory that
-conforms with `denote-silo-extras-path-is-silo-p'."
+conforms with `denote-silo-path-is-silo-p'."
   (interactive
    (list
-    (denote-silo-extras-directory-prompt)
+    (denote-silo-directory-prompt)
     ))
-  (denote-silo-extras-with-silo silo
+  (denote-silo-with-silo silo
     (let ((denote-directory silo))
       (list-denotes))))
 (map!
@@ -1344,7 +1319,7 @@ Denote uses ~filetags~ in front matter to generate its file naming scheme, but w
 
 In such cases, put two declarations of the ~filetag~ in front matter. Denote will only pick first declaration, while subsequent declarations would get ignored by denote.
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq org-stuck-projects '("+LEVEL=2-NOTSTUCK/-DONE"
+(setq org-stuck-projects '("+LEVEL=2-NOTSTUCK/-DONE-KILL"
                            ("TODO" "NEXT" "NEXTACTION")
                            nil ""))
 #+END_SRC
@@ -1423,11 +1398,10 @@ I have defined 2 silos default and =work= for now.
  - [ ] TODO silo integration
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq
- denote--journal-silo-directory (vk/org-directory "journal")
- denote-silo-extras-directories
+ denote-silo-directories
       (list
        (denote-directory)
-       denote--journal-silo-directory
+       denote-journal-directory
        (vk/org-directory "work")
        (vk/org-directory "games")))
 #+END_SRC
@@ -1458,7 +1432,7 @@ While working on something while clocked in, capture notes quickly
 Make journal entries from anywhere.
 #+name: org-capture-journal
 #+BEGIN_SRC emacs-lisp
-("j" "Journal entry" entry (file ,(+org-capture-journal-file))
+("j" "Journal entry" entry (file ,(denote-journal-path-to-new-or-existing-entry))
  "* %? \n%U [[%f]]")
 ("a" "Montesary Activity" entry (file ,(denote-note-with-name "Montessori Workshop Feb 2025"))
  "* Day %? \n")
@@ -1481,14 +1455,6 @@ Make journal entries from anywhere.
         <<org-capture-protocol>>
         ))
 #+END_SRC
-
-#+RESULTS:
-| t | todo             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * TODO %?                      |                   |   |
-| i | idea             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * IDEA %?                           |                   |   |
-| l | link             | entry | (file /home/kvineet/sync/org/inbox.org)                                                           | * TODO %(org-cliplink-capture) | :immediate-finish | t |
-| c | Current clock in | item  | (clock)                                                                                           | - %U %?                             |                   |   |
-| j | Journal entry    | entry | (file /home/kvineet/sync/org/journal/20250204T000000--tuesday-04-february-2025__2025_journal.org) | * %?                                |                   |   |
-
 ** calibre
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq calibredb-root-dir ebooks-root-directory
