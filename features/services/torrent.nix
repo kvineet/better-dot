@@ -38,6 +38,7 @@
         ExposeHostPort=8191/tcp
         Image=ghcr.io/flaresolverr/flaresolverr:latest
         Label=in.kvineet.pc1.torrent.service=flaresolverr
+        UserNS=keep-id:uid=1000,gid=1000
         Network=proxy
         Pod=torrent.pod
       '';
@@ -71,6 +72,7 @@
         ExposeHostPort=7878/tcp
         Image=lscr.io/linuxserver/radarr:latest
         Label=in.kvineet.pc1.torrent.service=radarr
+        UserNS=keep-id:uid=1000,gid=1000
         Network=proxy
         Pod=torrent.pod
         Volume=${globals.dirs.downloads}/torrents:/downloads
@@ -91,6 +93,7 @@
         Exec='--conf=/config/ranga.yml' --debug
         Image=registry.gitlab.com/engineerwolf/ranga:latest
         Label=in.kvineet.pc1.torrent.service=ranga
+        UserNS=keep-id:uid=1000,gid=1000
         Network=proxy
         Pod=torrent.pod
         Volume=${config.xdg.configHome}/torrent/ranga:/config
@@ -109,6 +112,7 @@
         Exec='--conf=/config/rss-godler.yml' --deamon-mode --debug
         Image=registry.gitlab.com/engineerwolf/rss-godler:latest
         Label=in.kvineet.pc1.torrent.service=rss-godler
+        UserNS=keep-id:uid=1000,gid=1000
         Network=proxy
         Pod=torrent.pod
         Volume=${globals.dirs.downloads}/torrents:/downloads
@@ -128,6 +132,7 @@
         ExposeHostPort=8989/tcp
         Image=lscr.io/linuxserver/sonarr:latest
         Label=in.kvineet.pc1.torrent.service=sonarr
+        UserNS=keep-id:uid=1000,gid=1000
         Network=proxy
         Pod=torrent.pod
         Volume=${globals.dirs.downloads}/torrents:/downloads

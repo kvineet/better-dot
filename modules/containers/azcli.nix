@@ -1,10 +1,11 @@
-{ pkgs, config, ... }:
 {
-  # You can import other home-manager modules here
-  imports = [
-    ../../modules/docker
-    ../../modules/kubernetes
-  ];
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
   home = {
     packages = with pkgs; [ azure-cli ];
     sessionVariables = {

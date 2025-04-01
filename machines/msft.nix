@@ -14,7 +14,7 @@
   imports = [
     ./common.nix
     ../features/wsl
-    ../features/azk8s
+    ../modules/containers/k8s.nix
     ../modules/utils/ledger
     ../modules/utils/sql
     ../modules/devtools
@@ -35,9 +35,9 @@
       condition = "hasconfig:remote.*.url:https://msazuredev@dev.azure.com/**";
       contentSuffix = "msft.gitconfig";
       contents = {
-      	core = {
-	  autocrlf = true;
-	};
+        core = {
+          autocrlf = true;
+        };
         user = {
           email = "vinekulkarni@microsoft.com";
           name = "Vineet  Kulkarni";

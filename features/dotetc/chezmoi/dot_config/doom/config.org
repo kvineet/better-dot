@@ -529,9 +529,9 @@ literate
 #+begin_src emacs-lisp
 :
 :myui
-svg
 focus
 ligatures
+svg
 
 :org
 (denote
@@ -539,10 +539,11 @@ ligatures
  +consult
  +silo
  +menu)
-(pretty +ligatures +svg)
-(qol +calfw)
 (draw +krita)
+orgql
+(pretty +ligatures +svg)
 protocol
+(qol +calfw)
 
 :dev
 leetcode
@@ -683,6 +684,17 @@ Configure =modline= to show some additional information
 #+END_SRC
 
 ** Org modules
+*** =org-ql=
+#+BEGIN_SRC emacs-lisp :tangle modules/org/orgql/packages.el
+<<license>>
+
+(package! org-ql :recipe (:host github :repo "alphapapa/org-ql"))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :tangle modules/org/orgql/config.el
+(use-package! org-ql
+  )
+#+END_SRC
+
 *** pretty
 **** center org buffers
 #+BEGIN_SRC emacs-lisp :tangle modules/org/pretty/config.el
@@ -1289,16 +1301,20 @@ conforms with `denote-silo-path-is-silo-p'."
         leetcode-save-solutions t
         leetcode-directory "~/projects/leetcode"))
 #+END_SRC
+* Workarounds
+** =lsp-mode= doesn't ignore =.devenv/=
+=lsp-mode= defines a list of directories to ignore by default. It also has support for =direnv=, but we are using =devenv=.
+doing this as a list, if any other directories needs ignoring in future.
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(after! lsp-mode
+  (dolist (dir '("[/\\\\]\\.devenv\\'"))
+    (push dir lsp-file-watch-ignored-directories)))
+#+END_SRC
+
+#+RESULTS:
+
 * Configuration
 Configuration that can not be a module
-** Be a serious editor
-*** no newlines please
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(add-hook 'text-mode-hook 'my-text-mode-hook)
-(defun my-text-mode-hook ()
-  "Custom behaviours for `text-mode'."
-  (setq-local require-final-newline nil))
-#+END_SRC
 ** Org mode
 *** =todo= sequence
 #+begin_src emacs-lisp
@@ -1309,7 +1325,7 @@ Configuration that can not be a module
        (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
 #+end_src
 *** agenda
-**** Some files are never meant to get stuck
+**** Some files are never meant to getting stuck
 Don't want things in stuck projects that can never get stuck. There probably is
 better way of doing this in future. But for now, we use a special tag =:NOTSTUCK:=
 
@@ -1338,8 +1354,7 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                      ((org-agenda-overriding-header "Urgent Not Important")))
           (tags-todo "+PRIORITY=\"C\""
                      ((org-agenda-overriding-header "Not Urgent But Important")
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
-          ))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))))
         ("m" "Mobile tasks"
          ((tags-todo "+@mobile"
                      ((org-agenda-prefix-format "%t%s")
@@ -1371,7 +1386,7 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
         ("r" "Reading"
          ((tags-todo "+#25"
                      ((org-agenda-overriding-header "2025 Reading List")))
-         (tags-todo "/!WANT"
+          (tags-todo "/!WANT"
                      ((org-agenda-overriding-header "Books to Download"))))
          ((org-agenda-hide-tags-regexp ".*")
           (org-agenda-files (directory-files (denote-directory) t "_books" nil))
@@ -1390,7 +1405,23 @@ In such cases, put two declarations of the ~filetag~ in front matter. Denote wil
                       (org-agenda-hide-tags-regexp
                        (regexp-opt '("gtd" "TODO" "@planning")))
                       (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'scheduled))))))))
+                       '(org-agenda-skip-entry-if 'scheduled))))))
+        ("#" "Stuck Projects"
+         ((org-ql-block '(and (or (tags "project")
+                                  (todo "PROJ"))
+                              (or (todo)
+                                  (descendants (todo)))
+                              (not (parent))
+                              (not (todo "HOLD" "WAIT"))
+                              (not (tags "NOTSTUCK"))
+                              (not (done))
+                              (not (planning)))
+                        ((org-ql-block-header "Stuck")))
+          (org-ql-block '(and (todo "HOLD" "WAIT")
+                              (not (tags "NOTSTUCK"))
+                              (not (done))
+                              (not (planning)))
+                        ((org-ql-block-header "Awaited")))))))
 #+END_SRC
 *** silos
 For now journals live in denote directory. It might change later.

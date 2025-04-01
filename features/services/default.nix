@@ -17,9 +17,9 @@
       target = "${globals.dirs.containerDir}/env/common.env";
       text = ''
         TZ="Asia/Kolkata"
-        PUID='0'
-        PGID='0'
-        GIDLIST='0'
+        UID=1
+        GID=1
+        GIDLIST=0
         PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
         HOME=/root
         LANGUAGE=en_US.UTF-8

@@ -13,8 +13,8 @@
   # You can import other home-manager modules here
   imports = [
     ./common.nix
-    ../features/azk8s
     ../features/services
+    ../modules/containers/k3s.nix
     ../modules/utils/ledger
     ../modules/utils/barrier
     ../modules/devtools
@@ -28,6 +28,7 @@
   };
   home.packages = with pkgs; [
     kdePackages.yakuake
+    k3s
   ];
   programs.zsh.zsh-abbr.abbreviations = {
     hm = "home-manager switch --flake ${globals.dirs.dotdir}#pc";
