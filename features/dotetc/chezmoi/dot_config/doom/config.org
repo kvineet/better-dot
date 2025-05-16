@@ -544,6 +544,7 @@ orgql
 (pretty +ligatures +svg)
 protocol
 (qol +calfw)
+export
 
 :dev
 leetcode
@@ -1270,6 +1271,14 @@ conforms with `denote-silo-path-is-silo-p'."
 (require 'org-protocol)
 #+END_SRC
 
+*** org export
+#+BEGIN_SRC emacs-lisp :tangle modules/org/export/packages.el
+(package! ox-epub)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :tangle modules/org/export/config.el
+(require 'ox-epub)
+#+END_SRC
+
 ** $\LaTeX$ Modules
 *** auto expanding snippets
 #+BEGIN_SRC emacs-lisp :tangle "modules/latex/default/packages.el"
@@ -1486,6 +1495,10 @@ Make journal entries from anywhere.
         <<org-capture-protocol>>
         ))
 #+END_SRC
+*** =org-archive= default command
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq! org-archive-default-command 'org-archive-to-archive-sibling)
+#+END_SRC
 ** calibre
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq calibredb-root-dir ebooks-root-directory
@@ -1533,9 +1546,15 @@ Make journal entries from anywhere.
 ,** [ ] plan next month goals
 #+END_SRC
 
-* COMMENT Archive
+* Local
+buffer local words that I don't want in my personal dictionary
+#  LocalWords:  KVineet Modline modline Prettification leetcode LeetCode
+* Archive :ARCHIVE:
 No longer in use. will delete at some point
 ** =org-roam=
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 *** helper functions
 **** add property for dailies
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -1663,6 +1682,9 @@ No longer in use. will delete at some point
 (setq org-roam-encrypt-files t)
 #+END_SRC
 ** =zetteldesk=
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 *** Install package
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 ;; ~/.doom.d/packages.el
@@ -1679,6 +1701,9 @@ No longer in use. will delete at some point
   (require 'zetteldesk-kb))
 #+END_SRC
 ** Elfeed
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 (package! elfeed-goodies)
 #+END_SRC
@@ -1695,20 +1720,29 @@ Configure Elfeed goodies
   (kbd "K") 'elfeed-goodies/split-show-prev)
 #+END_SRC
 ** =systemd= unit
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 ** Workarounds
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 *** [#D] hydra is better for =read-action=
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
 ** org-pretty-tags
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 (package! org-pretty-tags)
 #+END_SRC
 ** Disable perspective mode from launching new workspace
+:PROPERTIES:
+:ARCHIVE_TIME: 2025-04-17 Thu 11:03
+:END:
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (after! persp-mode
   (setq persp-emacsclient-init-frame-behaviour-override "main"))
 #+END_SRC
-* Local
-buffer local words that I don't want in my personal dictionary
-#  LocalWords:  KVineet Modline modline Prettification leetcode LeetCode
