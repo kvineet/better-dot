@@ -3,14 +3,23 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    krewfile = {
+      url = "github:brumhard/krewfile";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixgl.url = "github:nix-community/nixGL";
   };
   outputs =
     {
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
+      krewfile,
       nixgl,
       ...
     }@inputs:
@@ -18,6 +27,7 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgsStable = import nixpkgs-stable { inherit system; }; # Unstable packages
       overlays = [ nixgl.overlay ];
       globals = {
         username = "kvineet";
@@ -39,6 +49,7 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit globals;
+            inherit pkgsStable;
           };
           modules = [
             ./machines/minimal.nix
@@ -48,9 +59,11 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit globals;
+            inherit pkgsStable;
           };
           modules = [
             ./machines/msft.nix
+            inputs.krewfile.homeManagerModules.krewfile
           ];
         };
         "pc" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -58,6 +71,7 @@
           # targets.genericLinux.enable = true;
           extraSpecialArgs = {
             inherit globals;
+            inherit pkgsStable;
           };
           modules = [
             ./machines/pc.nix

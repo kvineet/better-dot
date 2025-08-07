@@ -85,11 +85,13 @@ zinit ice \
     nocompile
 zinit light zdharma-continuum/null
 
+compdef kubecolor=kubectl
+
 zinit ice \
     as"completion" \
-    id-as"kubecolor-completion" \
-    has"kubecolor" \
-    atclone"kubectl completion zsh > _kubecolor" \
+    id-as"kubectl-klock-completion" \
+    has"kubectl-klock" \
+    atclone"kubectl klock completion zsh > _kubectl-klock" \
     atpull"%atclone" \
     nocompile
 zinit light zdharma-continuum/null
